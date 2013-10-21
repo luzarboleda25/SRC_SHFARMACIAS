@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author pc
+ * @author Pangea
  */
 @Entity
 @Table(name = "COLA_PREORDEN_MEDICAMENTO")

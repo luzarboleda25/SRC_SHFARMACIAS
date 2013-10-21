@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author pc
+ * @author Pangea
  */
 @Entity
 @Table(name = "ANALISTA")
@@ -65,7 +65,9 @@ public class Analista implements Serializable {
     private String contrasena;
     @Size(max = 50)
     @Column(name = "ESTADO")
-    private BigDecimal estado;
+    private String estado;
+
+   
     @JoinColumn(name = "ROL_IDROL", referencedColumnName = "IDROL")
     @ManyToOne(optional = false)
     private Rol rolIdrol;
@@ -139,6 +141,13 @@ public class Analista implements Serializable {
     public void setRolIdrol(Rol rolIdrol) {
         this.rolIdrol = rolIdrol;
     }
+     public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     @XmlTransient
     public Collection<PreordenMedicamentoAnalista> getPreordenMedicamentoAnalistaCollection() {
@@ -172,14 +181,6 @@ public class Analista implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.Analista[ idanalista=" + idanalista + " ]";
-    }
-
-    public BigDecimal getEstado() {
-        return estado;
-    }
-
-    public void setEstado(BigDecimal estado) {
-        this.estado = estado;
     }
     
 }

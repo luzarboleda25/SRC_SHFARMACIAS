@@ -120,7 +120,7 @@ public class FarmaciaMedicamento implements Serializable {
         return precio;
     }
 
-    public void setPrecio(BigDecimal precio) {
+    public void setPrecio(Serializable precio) {
         this.precio = precio;
     }
 
@@ -128,7 +128,7 @@ public class FarmaciaMedicamento implements Serializable {
         return iva;
     }
 
-    public void setIva(BigDecimal iva) {
+    public void setIva(Serializable iva) {
         this.iva = iva;
     }
     

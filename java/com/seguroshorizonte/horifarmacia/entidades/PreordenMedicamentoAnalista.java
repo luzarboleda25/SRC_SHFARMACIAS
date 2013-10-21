@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author pc
+ * @author Pangea
  */
 @Entity
 @Table(name = "PREORDEN_MEDICAMENTO_ANALISTA")
