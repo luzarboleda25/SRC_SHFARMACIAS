@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Analista.findByApellido", query = "SELECT a FROM Analista a WHERE a.apellido = :apellido"),
     @NamedQuery(name = "Analista.findByCorreo", query = "SELECT a FROM Analista a WHERE a.correo = :correo"),
     @NamedQuery(name = "Analista.findByUsuario", query = "SELECT a FROM Analista a WHERE a.usuario = :usuario"),
-    @NamedQuery(name = "Analista.findByContrasena", query = "SELECT a FROM Analista a WHERE a.contrasena = :contrasena")})
+    @NamedQuery(name = "Analista.findByContrasena", query = "SELECT a FROM Analista a WHERE a.contrasena = :contrasena"),
+    @NamedQuery(name = "Analista.findByEstado", query = "SELECT COUNT(a) FROM Analista a WHERE a.estado = :estado")})
 public class Analista implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

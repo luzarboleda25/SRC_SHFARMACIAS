@@ -8,6 +8,7 @@ import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,4 +28,11 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
         super(Analista.class);
     }
     
+    public int operadoresConectados(int estado){
+        
+        int contOperadores;
+        Query cont=em.createNamedQuery("Analista.findByEstado").setParameter("estado", estado);
+        contOperadores =cont.getMaxResults();
+        return contOperadores;
+    }
 }
