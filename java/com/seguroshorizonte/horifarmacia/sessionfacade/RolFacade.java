@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seguroshorizonte.horifarmacia.entidades;
+package com.seguroshorizonte.horifarmacia.sessionfacade;
 
+import com.seguroshorizonte.horifarmacia.entidades.Rol;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

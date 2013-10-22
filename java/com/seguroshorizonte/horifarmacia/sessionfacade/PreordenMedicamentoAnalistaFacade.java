@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seguroshorizonte.horifarmacia.entidades;
+package com.seguroshorizonte.horifarmacia.sessionfacade;
 
+import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author Pangea
  */
 @Stateless
-public class AnalistaFacade extends AbstractFacade<Analista> {
+public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMedicamentoAnalista> {
     @PersistenceContext(unitName = "HoriFarmaciaPU")
     private EntityManager em;
 
@@ -22,8 +23,8 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
         return em;
     }
 
-    public AnalistaFacade() {
-        super(Analista.class);
+    public PreordenMedicamentoAnalistaFacade() {
+        super(PreordenMedicamentoAnalista.class);
     }
     
 }
