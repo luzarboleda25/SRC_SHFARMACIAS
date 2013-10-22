@@ -65,7 +65,7 @@ public class Analista implements Serializable {
     private String contrasena;
     @Size(max = 50)
     @Column(name = "ESTADO")
-    private String estado;
+    private BigDecimal estado;
 
    
     @JoinColumn(name = "ROL_IDROL", referencedColumnName = "IDROL")
@@ -141,11 +141,11 @@ public class Analista implements Serializable {
     public void setRolIdrol(Rol rolIdrol) {
         this.rolIdrol = rolIdrol;
     }
-     public String getEstado() {
+     public BigDecimal getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(BigDecimal estado) {
         this.estado = estado;
     }
 
