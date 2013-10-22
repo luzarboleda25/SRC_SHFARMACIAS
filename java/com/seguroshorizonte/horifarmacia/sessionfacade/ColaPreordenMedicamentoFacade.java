@@ -32,7 +32,8 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
     public int listaColaHoy(Date fecha){
         
         int listaFechaHoy;
-        Query listaHoy=em.createNamedQuery("ColaPreordenMedicamento.findByFechaHoy").setParameter("fecha", fecha);
+        Query listaHoy=em.createNamedQuery("ColaPreordenMedicamento.findByFechaHoy", ColaPreordenMedicamento.class);
+        listaHoy.setParameter("fecha", fecha);
         listaFechaHoy = listaHoy.getMaxResults();
         return listaFechaHoy;
     }
@@ -41,7 +42,8 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
     public int listaColaNoHoy(Date fecha){
         
         int listaFechaNoHoy;
-        Query listaNoHoy=em.createNamedQuery("ColaPreordenMedicamento.findByFechaNoHoy").setParameter("fecha", fecha);
+        Query listaNoHoy=em.createNamedQuery("ColaPreordenMedicamento.findByFechaNoHoy", ColaPreordenMedicamento.class);
+        listaNoHoy.setParameter("fecha", fecha);
         listaFechaNoHoy = listaNoHoy.getMaxResults();
         return listaFechaNoHoy;
     }

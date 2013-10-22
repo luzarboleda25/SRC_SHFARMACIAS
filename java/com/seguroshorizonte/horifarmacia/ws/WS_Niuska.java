@@ -27,12 +27,9 @@ public class WS_Niuska {
     
     @WebMethod(operationName = "contarColaPreOrden")
     public int contarColaPreOrden() {
-        try {
+        
             return colaServices.count();
-        } catch (Exception ex) {
-            System.out.println("Hubo error");
-            return 0;
-        }
+       
     }
     
     

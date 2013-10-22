@@ -31,7 +31,8 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
     public int operadoresConectados(int estado){
         
         int contOperadores;
-        Query cont=em.createNamedQuery("Analista.findByEstado").setParameter("estado", estado);
+        Query cont=em.createNamedQuery("Analista.findByEstado",Analista.class);
+        cont.setParameter("estado", estado);
         contOperadores =cont.getMaxResults();
         return contOperadores;
     }
