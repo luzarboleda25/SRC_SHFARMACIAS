@@ -27,9 +27,12 @@ public class WS_Niuska {
     
     @WebMethod(operationName = "contarColaPreOrden")
     public int contarColaPreOrden() {
-        
+        try{
             return colaServices.count();
-       
+        } catch (Exception ex) {
+            System.out.println("Hubo error");
+            return 0;
+        }
     }
     
     
@@ -37,7 +40,8 @@ public class WS_Niuska {
     public int contarColaFechaHoy(@WebParam(name = "listaHoy") Date fecha) {
     
         try{
-            return colaServices.listaColaHoy(fecha);
+            int colaHoy = ((Integer) colaServices.listaColaHoy(fecha)).intValue();
+            return colaHoy;
         } catch (Exception ex) {
             System.out.println("Hubo error");
             return 0;
@@ -62,7 +66,8 @@ public class WS_Niuska {
     public int contarOperadoresConectados(@WebParam(name = "operadoresConectados") int estado) {
     
         try{
-            return analistaServices.operadoresConectados(estado);
+            int operadoresConecatdos = ((Integer) analistaServices.operadoresConectados(estado)).intValue();
+            return operadoresConecatdos;
         } catch (Exception ex) {
             System.out.println("Hubo error");
             return 0;
