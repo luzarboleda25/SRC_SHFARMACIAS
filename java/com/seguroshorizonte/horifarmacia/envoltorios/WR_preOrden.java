@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * instancias de esta clase almacenan tanto el resultado de la operacion
  * ejecutada como los objetos solicitados.
  *
- * @author seguroshorizonte
+ * @author HoriFarmacia
  */
 public class WR_preOrden {
 
@@ -27,7 +27,7 @@ public class WR_preOrden {
      */
     private String observacion;
     /**
-     * Lista de objetos de la clase actividad que son retornados por la
+     * Lista de objetos de la clase Preordens que son retornados por la
      * operacion web.
      */
     private ArrayList<Preorden> Preordens;
@@ -93,24 +93,24 @@ public class WR_preOrden {
      *
      * @return Lista de las Preordenes obtenidas
      */
-    public ArrayList<Preorden> getActividads() {
+    public ArrayList<Preorden> getPreordens() {
         return Preordens;
     }
 
     /**
-     * Asigna una lista de actividades al envoltorio.
+     * Asigna una lista de Preordenes al envoltorio.
      *
      * @param Preordens Lista de objetos de la clase Preorden
      */
-    public void setActividads(ArrayList<Preorden> actividads) {
-        this.Preordens = actividads;
+    public void setPreordens(ArrayList<Preorden> Preordens) {
+        this.Preordens = Preordens;
     }
 
     /**
      * Ingresa un nuevo objeto de la clase Preorden a la lista de Preordenes
      * del envoltorio.
      *
-     * @param nuevaPreorden objeto de la clase actividad que se desea añadir a
+     * @param nuevaPreorden objeto de la clase Preorden que se desea añadir a
      * la lista
      */
     public void ingresarPreorden(Preorden nuevaPreorden) {
