@@ -2,20 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seguroshorizonte.capadeservicios.envoltorios;
+package com.seguroshorizonte.horifarmacia.envoltorios;
 
-import com.seguroshorizonte.capadeservicios.entidades.actividad;
+import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import java.util.ArrayList;
 
 /**
  * Esta clase posee los metodos y atributos para servir de envoltorio a los
- * objetos de la clase actividad retornados por las operaciones web. Las
+ * objetos de la clase Preorden retornados por las operaciones web. Las
  * instancias de esta clase almacenan tanto el resultado de la operacion
  * ejecutada como los objetos solicitados.
  *
- * @author pangea technologies c.a.
+ * @author seguroshorizonte
  */
-public class WR_actividad {
+public class WR_preOrden {
 
     /**
      * Resultado de la ejecucion de la operacion web que retorno el wrapper.
@@ -30,13 +30,13 @@ public class WR_actividad {
      * Lista de objetos de la clase actividad que son retornados por la
      * operacion web.
      */
-    private ArrayList<actividad> actividads;
+    private ArrayList<Preorden> Preordens;
 
     /**
      * Constructor
      */
-    public WR_actividad() {
-        actividads = new ArrayList<actividad>();
+    public WR_preOrden() {
+        Preordens = new ArrayList<Preorden>();
     }
 
     /**
@@ -87,33 +87,33 @@ public class WR_actividad {
     }
 
     /**
-     * Obtiene la lista de actividades que posee el envoltorio. Dependiendo de
+     * Obtiene la lista de Preordenes que posee el envoltorio. Dependiendo de
      * la operacion que llene el envoltorio, esta lista podria tener de 0 a N
      * elementos
      *
-     * @return Lista de las actividades obtenidas
+     * @return Lista de las Preordenes obtenidas
      */
-    public ArrayList<actividad> getActividads() {
-        return actividads;
+    public ArrayList<Preorden> getActividads() {
+        return Preordens;
     }
 
     /**
      * Asigna una lista de actividades al envoltorio.
      *
-     * @param actividads Lista de objetos de la clase actividad
+     * @param Preordens Lista de objetos de la clase Preorden
      */
-    public void setActividads(ArrayList<actividad> actividads) {
-        this.actividads = actividads;
+    public void setActividads(ArrayList<Preorden> actividads) {
+        this.Preordens = actividads;
     }
 
     /**
-     * Ingresa un nuevo objeto de la clase actividad a la lista de actividades
+     * Ingresa un nuevo objeto de la clase Preorden a la lista de Preordenes
      * del envoltorio.
      *
-     * @param nuevaActividad objeto de la clase actividad que se desea añadir a
+     * @param nuevaPreorden objeto de la clase actividad que se desea añadir a
      * la lista
      */
-    public void ingresarActividad(actividad nuevaActividad) {
-        actividads.add(nuevaActividad);
+    public void ingresarPreorden(Preorden nuevaPreorden) {
+        Preordens.add(nuevaPreorden);
     }
 }
