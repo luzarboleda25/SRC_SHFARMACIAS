@@ -5,6 +5,7 @@
 package com.seguroshorizonte.horifarmacia.sessionfacade;
 
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,12 +29,12 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
         super(Analista.class);
     }
     
-    public Object operadoresConectados(int estado){
+     public Object operadoresConectados(int estado){
         
-        Object contOperadores;
-        Query cont=em.createNamedQuery("Analista.findByEstado", Analista.class);
-        cont.setParameter("estado", estado);
-        contOperadores =cont.getSingleResult();
-        return contOperadores;
+        Object resultCont;
+        Query query = em.createNamedQuery("Analista.findByEsta", Analista.class);
+        query.setParameter("estado", estado);
+        resultCont = query.getSingleResult();
+        return resultCont;
     }
 }

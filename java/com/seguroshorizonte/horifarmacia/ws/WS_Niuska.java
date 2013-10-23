@@ -4,7 +4,11 @@
  */
 package com.seguroshorizonte.horifarmacia.ws;
 
+import com.seguroshorizonte.horifarmacia.entidades.Analista;
+import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -37,11 +41,20 @@ public class WS_Niuska {
     
     
     @WebMethod(operationName = "contarColaFechaHoy")
-    public int contarColaFechaHoy(@WebParam(name = "listaHoy") Date fecha) {
-    
+    public int contarColaFechaHoy() {
+        
+        Date fecha = new Date();
+        System.out.println("Fechaaaa:  "+fecha);
+        
         try{
-            int colaHoy = ((Integer) colaServices.listaColaHoy(fecha)).intValue();
-            return colaHoy;
+            int colaFecha=0;
+            String result;
+            Object resultado;
+            
+            resultado=colaServices.listaColaNoHoy(fecha);
+            result=resultado.toString();
+            colaFecha=Integer.parseInt(result);
+            return colaFecha;
         } catch (Exception ex) {
             System.out.println("Hubo error");
             return 0;
@@ -50,10 +63,22 @@ public class WS_Niuska {
     
     
     @WebMethod(operationName = "contarColaFechaNoHoy")
-    public int contarColaFechaNoHoy(@WebParam(name = "listaNoHoy") Date fecha) {
+    public int contarColaFechaNoHoy(@WebParam(name = "fecha") String fecha) {
     
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/mm/yy");
+        String strFecha = fecha;
+        Date fechadate = null;
+        
         try{
-            return colaServices.listaColaNoHoy(fecha);
+            int colaFecha;
+            String result;
+            Object resultado;
+            
+            fechadate = formatoDelTexto.parse(strFecha);
+            resultado=colaServices.listaColaNoHoy(fechadate);
+            result=resultado.toString();
+            colaFecha=Integer.parseInt(result);
+            return colaFecha;
         } catch (Exception ex) {
             System.out.println("Hubo error");
             return 0;
@@ -61,13 +86,20 @@ public class WS_Niuska {
     }
     
     
-    
     @WebMethod(operationName = "contarOperadoresConectados")
-    public int contarOperadoresConectados(@WebParam(name = "operadoresConectados") int estado) {
+    public int contarOperadoresConectados(@WebParam(name = "estado") String estado) {
     
         try{
-            int operadoresConecatdos = ((Integer) analistaServices.operadoresConectados(estado)).intValue();
-            return operadoresConecatdos;
+            int operadoresConectados, estadoint;
+            String result;
+            Object resultado;
+            
+            estadoint = Integer.parseInt(estado);
+
+            resultado=analistaServices.operadoresConectados(estadoint);
+            result=resultado.toString();
+            operadoresConectados= Integer.parseInt(result);
+            return operadoresConectados;
         } catch (Exception ex) {
             System.out.println("Hubo error");
             return 0;
