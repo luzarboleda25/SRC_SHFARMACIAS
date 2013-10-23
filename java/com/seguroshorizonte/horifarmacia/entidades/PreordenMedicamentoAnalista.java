@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamentoAnalista.ContarSHXidAnalista", query = "SELECT COUNT(p.idpreMedAna)  FROM PreordenMedicamentoAnalista p WHERE p.analistaIdanalista = :analistaIdanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByIdAnalista", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.analistaIdanalista = :analistaIdanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByProcesadaFechaHoy", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
+    @NamedQuery(name = "PreordenMedicamentoAnalista.findByContadorProcesadas", query = "SELECT COUNT(p) FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacion", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacion = :observacion")})
 public class PreordenMedicamentoAnalista implements Serializable {
     private static final long serialVersionUID = 1L;

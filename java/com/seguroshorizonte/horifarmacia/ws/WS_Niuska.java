@@ -78,20 +78,35 @@ public class WS_Niuska {
         }
     }
     
-    @WebMethod(operationName = "obtenerSolicitudesProcesadasXFecha")
-    public List<PreordenMedicamentoAnalista> obtenerSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
+    @WebMethod(operationName = "listaSolicitudesProcesadasXFecha")
+    public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
 
         try {
             List<PreordenMedicamentoAnalista> listaPMA;
-            int estadoint;
             
-            estadoint = Integer.parseInt(estado);
-            
-            listaPMA=poMedicamentoAnalistaServices.obtenerSolicitudesProcesadasXFecha(estadoint);
+            listaPMA=poMedicamentoAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
             return listaPMA;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
             return null;
+        }
+    }
+    
+    @WebMethod(operationName = "obtenerSolicitudesProcesadasXFecha")
+    public int obtenerSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
+
+        try {
+            int contPMA;
+            String result;
+            Object resultado;
+            
+            resultado=poMedicamentoAnalistaServices.obtenerSolicitudesProcesadasXFecha(estado);
+            result=resultado.toString();
+            contPMA=Integer.parseInt(result);
+            return contPMA;
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
+            return 0;
         }
     }
 }
