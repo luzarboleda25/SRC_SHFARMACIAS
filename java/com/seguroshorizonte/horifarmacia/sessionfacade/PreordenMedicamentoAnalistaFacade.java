@@ -68,7 +68,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
     }
     
-     public int ContarSHXidAnalista(String IdAnalista) {
+     public int contarSHXidAnalista(String IdAnalista) {
          Analista data= new Analista();
          data.setIdanalista(new BigDecimal(IdAnalista));
          Date fecha=new Date();
