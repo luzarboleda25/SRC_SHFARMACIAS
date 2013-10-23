@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -41,6 +43,9 @@ public class RegistroIngreso implements Serializable {
     @Column(name = "FECHA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @JoinColumn(name = "ANALISTA_IDANALISTA", referencedColumnName = "IDANALISTA")
+    @ManyToOne(optional = false)
+    private Analista analistaIdanalista;
 
     public RegistroIngreso() {
     }
@@ -63,6 +68,14 @@ public class RegistroIngreso implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public Analista getAnalistaIdanalista() {
+        return analistaIdanalista;
+    }
+
+    public void setAnalistaIdanalista(Analista analistaIdanalista) {
+        this.analistaIdanalista = analistaIdanalista;
     }
 
     @Override
