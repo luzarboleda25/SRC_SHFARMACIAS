@@ -4,11 +4,7 @@
  */
 package com.seguroshorizonte.horifarmacia.ws;
 
-import com.seguroshorizonte.horifarmacia.entidades.Analista;
-import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -28,7 +24,9 @@ public class WS_Niuska {
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
     
-    
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade poMedicamentoAnalistaServices;
+   
     
     @WebMethod(operationName = "obtenerColaPreOrden")
     public int obtenerColaPreOrden() {
@@ -44,44 +42,17 @@ public class WS_Niuska {
     @WebMethod(operationName = "obtenerTotalXFechaHoy")
     public int obtenerTotalXFechaHoy() {
         
-        Date fecha = new Date();
-        System.out.println("Fechaaaa:  "+fecha);
-        
         try{
             int colaFecha=0;
             String result;
             Object resultado;
             
-            resultado=colaServices.obtenerTotalXFechaHoy(fecha);
+            resultado=colaServices.obtenerTotalXFechaHoy();
             result=resultado.toString();
             colaFecha=Integer.parseInt(result);
             return colaFecha;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Ingresadas en la Cola Hoy");
-            return 0;
-        }
-    }
-    
-    
-    @WebMethod(operationName = "obtenerTotalXFecha")
-    public int obtenerTotalXFecha(@WebParam(name = "fecha") String fecha) {
-    
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/mm/yy");
-        String strFecha = fecha;
-        Date fechadate = null;
-        
-        try{
-            int colaFecha;
-            String result;
-            Object resultado;
-            
-            fechadate = formatoDelTexto.parse(strFecha);
-            resultado=colaServices.obtenerTotalXFecha(fechadate);
-            result=resultado.toString();
-            colaFecha=Integer.parseInt(result);
-            return colaFecha;
-        } catch (Exception ex) {
-            System.out.println("ERROR de la busqueda de Solicitudes Pendientes por Procesar");
             return 0;
         }
     }
@@ -106,17 +77,21 @@ public class WS_Niuska {
             return 0;
         }
     }
-
-    /*@WebMethod(operationName = "listaPreordenMedicamentoAnalistaXidAnalista")
-    public List<PreordenMedicamentoAnalista> listaPreordenMedicamentoAnalistaXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
+    
+    @WebMethod(operationName = "obtenerSolicitudesProcesadasXFecha")
+    public List<PreordenMedicamentoAnalista> obtenerSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
 
         try {
             List<PreordenMedicamentoAnalista> listaPMA;
-            listaPMA = poMedicamentoAnalistaServices.listarPreOrdenProcesadasXidAnalista(idAnalista);
+            int estadoint;
+            
+            estadoint = Integer.parseInt(estado);
+            
+            listaPMA=poMedicamentoAnalistaServices.obtenerSolicitudesProcesadasXFecha(estadoint);
             return listaPMA;
         } catch (Exception ex) {
-            System.out.println("ERROR de la busqueda de PreOrden");
+            System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
             return null;
         }
-    }*/
+    }
 }
