@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ColaPreordenMedicamento.findAll", query = "SELECT c FROM ColaPreordenMedicamento c"),
     @NamedQuery(name = "ColaPreordenMedicamento.findByColaPreMedId", query = "SELECT c FROM ColaPreordenMedicamento c WHERE c.colaPreMedId = :colaPreMedId"),
-    @NamedQuery(name = "ColaPreordenMedicamento.findByFechaHoy", query = "SELECT COUNT(c.preordenMedicamentoId) FROM ColaPreordenMedicamento c WHERE c.fecha BETWEEN :fecha AND :fecha"),
+    @NamedQuery(name = "ColaPreordenMedicamento.findByFechaHoy", query = "SELECT COUNT(c.preordenMedicamentoId) FROM ColaPreordenMedicamento c WHERE c.fecha BETWEEN :fecha AND :fechaa"),
     @NamedQuery(name = "ColaPreordenMedicamento.findByFechaNoHoy", query = "SELECT COUNT(c.preordenMedicamentoId) FROM ColaPreordenMedicamento c WHERE c.fecha <> :fecha")})
 public class ColaPreordenMedicamento implements Serializable {
 

@@ -30,17 +30,18 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
         super(ColaPreordenMedicamento.class);
     }
     
-    public Object listaColaHoy(Date fecha){
+    public Object obtenerTotalXFechaHoy(Date fecha){
         
         Object resultCont;
         Query query = em.createNamedQuery("ColaPreordenMedicamento.findByFechaHoy", ColaPreordenMedicamento.class);
         query.setParameter("fecha", fecha);
+        query.setParameter("fechaa", fecha);
         resultCont = query.getSingleResult();
         return resultCont;
     }
     
     
-    public Object listaColaNoHoy(Date fecha){
+    public Object obtenerTotalXFecha(Date fecha){
         
         Object resultCont;
         Query query = em.createNamedQuery("ColaPreordenMedicamento.findByFechaNoHoy", ColaPreordenMedicamento.class);

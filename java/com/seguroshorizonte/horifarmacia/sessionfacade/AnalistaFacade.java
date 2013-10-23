@@ -29,7 +29,7 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
         super(Analista.class);
     }
     
-     public Object operadoresConectados(int estado){
+     public Object obtenerTotaOperadoresConectadosXEstado(int estado){
         
         Object resultCont;
         Query query = em.createNamedQuery("Analista.findByEsta", Analista.class);
