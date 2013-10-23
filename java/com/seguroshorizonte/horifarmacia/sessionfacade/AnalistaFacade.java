@@ -36,4 +36,6 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
         contOperadores =cont.getSingleResult();
         return contOperadores;
     }
+    
+    
 }

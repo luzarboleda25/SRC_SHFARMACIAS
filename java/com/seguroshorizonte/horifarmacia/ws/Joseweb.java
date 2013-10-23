@@ -43,4 +43,16 @@ public class Joseweb {
             return null;
         }
     }
+    
+     @WebMethod(operationName = "ContarSHXidAnalista")
+    public int ContarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
+
+        try {
+            int Cont = poMedicamentoAnalistaServices.ContarSHXidAnalista(idAnalista);
+            return Cont;
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de PreOrden");
+            return 0;
+        }
+    }
 }
