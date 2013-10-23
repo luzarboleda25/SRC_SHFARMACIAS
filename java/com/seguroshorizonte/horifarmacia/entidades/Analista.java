@@ -38,9 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Analista.findByCorreo", query = "SELECT a FROM Analista a WHERE a.correo = :correo"),
     @NamedQuery(name = "Analista.findByUsuario", query = "SELECT a FROM Analista a WHERE a.usuario = :usuario"),
     @NamedQuery(name = "Analista.findByContrasena", query = "SELECT a FROM Analista a WHERE a.contrasena = :contrasena"),
+    @NamedQuery(name = "Analista.findByUsuarioYContrasena", query = "SELECT a FROM Analista a WHERE a.usuario = :usuario AND a.contrasena = :contrasena"),
     @NamedQuery(name = "Analista.findByEstado", query = "SELECT a FROM Analista a WHERE a.estado = :estado"),
     @NamedQuery(name = "Analista.findByEsta", query = "SELECT COUNT(a.idanalista) FROM Analista a WHERE a.estado = :estado")})
 public class Analista implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -68,8 +70,6 @@ public class Analista implements Serializable {
     @Size(max = 50)
     @Column(name = "ESTADO")
     private BigDecimal estado;
-
-   
     @JoinColumn(name = "ROL_IDROL", referencedColumnName = "IDROL")
     @ManyToOne(optional = false)
     private Rol rolIdrol;
@@ -143,7 +143,8 @@ public class Analista implements Serializable {
     public void setRolIdrol(Rol rolIdrol) {
         this.rolIdrol = rolIdrol;
     }
-     public BigDecimal getEstado() {
+
+    public BigDecimal getEstado() {
         return estado;
     }
 
@@ -184,5 +185,4 @@ public class Analista implements Serializable {
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.Analista[ idanalista=" + idanalista + " ]";
     }
-    
 }
