@@ -7,7 +7,9 @@ package com.seguroshorizonte.horifarmacia.ws;
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
+import com.seguroshorizonte.horifarmacia.entidades.RegistroIngreso;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -29,6 +31,8 @@ public class WS_mari {
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade PreMedAnaServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.RegistroIngresoFacade registroIngresoServices;
 
     /**
      * This is a sample web service operation
@@ -48,13 +52,14 @@ public class WS_mari {
             Respuesta = analistaServices.verificarLogIn(Analistaa);
         } catch (Exception e) {
             return 0;
-        } 
+        }
         return Respuesta;
     }
 
     @WebMethod(operationName = "obtenerAnalistaXUsuario")
     public Analista obtenerAnalistaXUsuario(@WebParam(name = "Usuario") String Usuario) {
         Analista Resultado = new Analista();
+        RegistroIngreso Registro = new RegistroIngreso();
         if (Usuario == null) {
             Usuario = "";
         }
@@ -62,6 +67,9 @@ public class WS_mari {
             Resultado = analistaServices.obtenerAnalistaXUsuario(Usuario);
             Resultado.setEstado(BigDecimal.ONE);
             analistaServices.edit(Resultado);
+            Registro.setFecha(new Date());
+            Registro.setAnalistaIdanalista(Resultado);
+            registroIngresoServices.create(Registro);
         } catch (Exception e) {
             return null;
         }
