@@ -43,6 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByContadorProcesadas", query = "SELECT COUNT(p) FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacion", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacion = :observacion")})
 public class PreordenMedicamentoAnalista implements Serializable {
+    @Size(max = 255)
+    @Column(name = "OBSERVACIONAUDITOR")
+    private String observacionauditor;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_POM_ANALISTA")
@@ -145,6 +148,14 @@ public class PreordenMedicamentoAnalista implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista[ idpreMedAna=" + idpreMedAna + " ]";
+    }
+
+    public String getObservacionauditor() {
+        return observacionauditor;
+    }
+
+    public void setObservacionauditor(String observacionauditor) {
+        this.observacionauditor = observacionauditor;
     }
     
 }
