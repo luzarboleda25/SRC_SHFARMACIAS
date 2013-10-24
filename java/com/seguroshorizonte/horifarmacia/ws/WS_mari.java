@@ -65,7 +65,7 @@ public class WS_mari {
         }
         try {
             Resultado = analistaServices.obtenerAnalistaXUsuario(Usuario);
-            Resultado.setEstado(BigDecimal.ONE);
+            Resultado.setEstado(Short.parseShort("1"));
             analistaServices.edit(Resultado);
             Registro.setFecha(new Date());
             Registro.setAnalistaIdanalista(Resultado);
