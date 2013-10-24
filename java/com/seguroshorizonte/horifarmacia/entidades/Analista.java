@@ -42,6 +42,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Analista.findByEstado", query = "SELECT a FROM Analista a WHERE a.estado = :estado"),
     @NamedQuery(name = "Analista.findByEsta", query = "SELECT COUNT(a.idanalista) FROM Analista a WHERE a.estado = :estado")})
 public class Analista implements Serializable {
+    @Column(name = "ESTADO")
+    private Short estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analistaIdanalista")
+    private Collection<RegistroIngreso> registroIngresoCollection;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -67,9 +71,6 @@ public class Analista implements Serializable {
     @Size(max = 50)
     @Column(name = "CONTRASENA")
     private String contrasena;
-    @Size(max = 50)
-    @Column(name = "ESTADO")
-    private BigDecimal estado;
     @JoinColumn(name = "ROL_IDROL", referencedColumnName = "IDROL")
     @ManyToOne(optional = false)
     private Rol rolIdrol;
@@ -144,14 +145,6 @@ public class Analista implements Serializable {
         this.rolIdrol = rolIdrol;
     }
 
-    public BigDecimal getEstado() {
-        return estado;
-    }
-
-    public void setEstado(BigDecimal estado) {
-        this.estado = estado;
-    }
-
     @XmlTransient
     public Collection<PreordenMedicamentoAnalista> getPreordenMedicamentoAnalistaCollection() {
         return preordenMedicamentoAnalistaCollection;
@@ -184,5 +177,22 @@ public class Analista implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.Analista[ idanalista=" + idanalista + " ]";
+    }
+
+    public Short getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Short estado) {
+        this.estado = estado;
+    }
+
+    @XmlTransient
+    public Collection<RegistroIngreso> getRegistroIngresoCollection() {
+        return registroIngresoCollection;
+    }
+
+    public void setRegistroIngresoCollection(Collection<RegistroIngreso> registroIngresoCollection) {
+        this.registroIngresoCollection = registroIngresoCollection;
     }
 }
