@@ -6,6 +6,7 @@ package com.seguroshorizonte.horifarmacia.ws;
 
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,6 +31,9 @@ public class Joseweb {
     private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenMedicamentoFacade ColaPoMedicamentoServices;
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade AnalistaServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoFacade PreordenMedicamentoServices;
+    
        
 
     /**
@@ -70,13 +74,15 @@ public class Joseweb {
         
            try{
                
-           ColaPreordenMedicamento primero = ColaPoMedicamentoServices.primeroCola();
-           Analista analista = AnalistaServices.find(idAnalista);
+           BigDecimal primeroC = ColaPoMedicamentoServices.primeroCola();
+           ColaPreordenMedicamento primero = ColaPoMedicamentoServices.find(primeroC);
+           Analista analista = AnalistaServices.find(new BigDecimal(idAnalista));
            PreordenMedicamentoAnalista PMAnalista=new PreordenMedicamentoAnalista();
+           PreordenMedicamento poMA = PreordenMedicamentoServices.find(primero.getPreordenMedicamentoId().getIdpreordenmedicamento());
            PMAnalista.setFecha(new Date());
-           PMAnalista.setPreordMedId(primero.getPreordenMedicamentoId());
+           PMAnalista.setPreordMedId(poMA);
            PMAnalista.setAnalistaIdanalista(analista);
-           PMAnalista.setEstado("N");
+           PMAnalista.setEstado("0");
            ColaPoMedicamentoServices.remove(primero);
            poMedicamentoAnalistaServices.create(PMAnalista);
            

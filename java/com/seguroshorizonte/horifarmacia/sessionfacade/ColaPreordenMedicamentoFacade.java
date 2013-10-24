@@ -77,14 +77,14 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
 
     }
      
-     public ColaPreordenMedicamento primeroCola(){
+     public BigDecimal primeroCola(){
         
          
            Query query = em.createNamedQuery("ColaPreordenMedicamento.findPrimeroCola", ColaPreordenMedicamento.class);
-           
-
-       ColaPreordenMedicamento resultList = (ColaPreordenMedicamento) query.getSingleResult();
-         return resultList;
+          Object resultList = query.getSingleResult();
+         String Auxi= resultList.toString();
+        BigDecimal aux = new BigDecimal(Auxi);
+         return aux;
          
      }
      
