@@ -6,6 +6,7 @@ package com.seguroshorizonte.horifarmacia.sessionfacade;
 
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.Preorden;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -22,6 +23,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMedicamentoAnalista> {
+
     @PersistenceContext(unitName = "HoriFarmaciaPU")
     private EntityManager em;
 
@@ -33,142 +35,147 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
     public PreordenMedicamentoAnalistaFacade() {
         super(PreordenMedicamentoAnalista.class);
     }
-    
+
     public List<PreordenMedicamentoAnalista> listarPreOrdenProcesadasXidAnalista(String IdAnalista) {
-        
-        Analista data= new Analista();
+
+        Analista data = new Analista();
         data.setIdanalista(new BigDecimal(IdAnalista));
-        Date fecha=new Date();
+        Date fecha = new Date();
         Date fecha2;
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-      
+
         cal.setTime(fecha);
         System.out.print(cal);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-       
-        fecha=cal.getTime();
+
+        fecha = cal.getTime();
         cal2.setTime(fecha);
-        int dia= cal.get(Calendar.DAY_OF_MONTH);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
         dia++;
         cal2.set(Calendar.DAY_OF_MONTH, dia);
-       
-        fecha2=cal2.getTime();
+
+        fecha2 = cal2.getTime();
         Query query;
         query = em.createNamedQuery("PreordenMedicamentoAnalista.findByIdAnalista", Preorden.class);
-        query.setParameter("analistaIdanalista",data);
-        query.setParameter("fecha1",fecha);
-        query.setParameter("fecha2",fecha2);
+        query.setParameter("analistaIdanalista", data);
+        query.setParameter("fecha1", fecha);
+        query.setParameter("fecha2", fecha2);
 
         List<PreordenMedicamentoAnalista> resultList = query.getResultList();
 
         return resultList;
 
     }
-    
-     public int contarSHXidAnalista(String IdAnalista) {
-       
-        Analista data= new Analista();
+
+    public int contarSHXidAnalista(String IdAnalista) {
+
+        Analista data = new Analista();
         data.setIdanalista(new BigDecimal(IdAnalista));
-        Date fecha=new Date();
+        Date fecha = new Date();
         Date fecha2;
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-      
+
         cal.setTime(fecha);
         System.out.print(cal);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-       
-        fecha=cal.getTime();
+
+        fecha = cal.getTime();
         cal2.setTime(fecha);
-        int dia= cal.get(Calendar.DAY_OF_MONTH);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
         dia++;
         cal2.set(Calendar.DAY_OF_MONTH, dia);
-       
-        fecha2=cal2.getTime();
+
+        fecha2 = cal2.getTime();
         Query query;
         query = em.createNamedQuery("PreordenMedicamentoAnalista.ContarSHXidAnalista", Preorden.class);
-        query.setParameter("analistaIdanalista",data);
-        query.setParameter("fecha1",fecha);
-        query.setParameter("fecha2",fecha2);
+        query.setParameter("analistaIdanalista", data);
+        query.setParameter("fecha1", fecha);
+        query.setParameter("fecha2", fecha2);
 
         Object resultList = query.getSingleResult();
-        
-        String contador= resultList.toString();
-        int con=Integer.parseInt(contador);
+
+        String contador = resultList.toString();
+        int con = Integer.parseInt(contador);
         return con;
 
     }
-     
-     
-     public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(String estado) {
-        
-        Date fecha=new Date();
+
+    public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(String estado) {
+
+        Date fecha = new Date();
         Date fecha2;
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-      
+
         cal.setTime(fecha);
         System.out.print(cal);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-       
-        fecha=cal.getTime();
+
+        fecha = cal.getTime();
         cal2.setTime(fecha);
-        int dia= cal.get(Calendar.DAY_OF_MONTH);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
         dia++;
         cal2.set(Calendar.DAY_OF_MONTH, dia);
-       
-        fecha2=cal2.getTime();
+
+        fecha2 = cal2.getTime();
         Query query;
         List<PreordenMedicamentoAnalista> resultList;
         query = em.createNamedQuery("PreordenMedicamentoAnalista.findByProcesadaFechaHoy", Preorden.class);
-        query.setParameter("estado",estado);
-        query.setParameter("fecha1",fecha);
-        query.setParameter("fecha2",fecha2);
-        resultList=query.getResultList();
+        query.setParameter("estado", estado);
+        query.setParameter("fecha1", fecha);
+        query.setParameter("fecha2", fecha2);
+        resultList = query.getResultList();
         return resultList;
 
     }
-     
+
     public Object obtenerSolicitudesProcesadasXFecha(String estado) {
-        
-        Date fecha=new Date();
+
+        Date fecha = new Date();
         Date fecha2;
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-      
+
         cal.setTime(fecha);
         System.out.print(cal);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-       
-        fecha=cal.getTime();
+
+        fecha = cal.getTime();
         cal2.setTime(fecha);
-        int dia= cal.get(Calendar.DAY_OF_MONTH);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
         dia++;
         cal2.set(Calendar.DAY_OF_MONTH, dia);
-       
-        fecha2=cal2.getTime();
+
+        fecha2 = cal2.getTime();
         Query query;
         Object resultCont;
         query = em.createNamedQuery("PreordenMedicamentoAnalista.findByContadorProcesadas", Preorden.class);
-        query.setParameter("estado",estado);
-        query.setParameter("fecha1",fecha);
-        query.setParameter("fecha2",fecha2);
-        resultCont=query.getSingleResult();
+        query.setParameter("estado", estado);
+        query.setParameter("fecha1", fecha);
+        query.setParameter("fecha2", fecha2);
+        resultCont = query.getSingleResult();
         return resultCont;
 
     }
-    
+
+    public PreordenMedicamentoAnalista obtenerPreordenMedicamentoAnalistaXidPreorden(PreordenMedicamento idPreordenMedicamento) {
+        Query query = em.createNamedQuery("PreordenMedicamentoAnalista.findByIdpreMedAna", PreordenMedicamentoAnalista.class);
+        query.setParameter("idpreMedAna", idPreordenMedicamento);
+        PreordenMedicamentoAnalista Resultado = (PreordenMedicamentoAnalista) query.getSingleResult();
+        return Resultado;
+    }
 }

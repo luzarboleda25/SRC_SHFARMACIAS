@@ -10,18 +10,15 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,13 +40,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByContadorProcesadas", query = "SELECT COUNT(p) FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacion", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacion = :observacion")})
 public class PreordenMedicamentoAnalista implements Serializable {
+    @JoinColumn(name = "IDPRE_MED_ANA", referencedColumnName = "IDPREORDENMEDICAMENTO")
+    @OneToOne(optional = false)
+    private PreordenMedicamento preordenMedicamento;
+    @JoinColumn(name = "IDAUDITOR", referencedColumnName = "IDANALISTA")
+    @ManyToOne
+    private Analista idauditor;
     @Size(max = 255)
     @Column(name = "OBSERVACIONAUDITOR")
     private String observacionauditor;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_POM_ANALISTA")
-    @SequenceGenerator(name = "SQ_POM_ANALISTA", sequenceName = "SQ_POM_ANALISTA", allocationSize = 1)
     @Id
     @Basic(optional = false)
     @Column(name = "IDPRE_MED_ANA")
@@ -156,6 +157,22 @@ public class PreordenMedicamentoAnalista implements Serializable {
 
     public void setObservacionauditor(String observacionauditor) {
         this.observacionauditor = observacionauditor;
+    }
+
+    public PreordenMedicamento getPreordenMedicamento() {
+        return preordenMedicamento;
+    }
+
+    public void setPreordenMedicamento(PreordenMedicamento preordenMedicamento) {
+        this.preordenMedicamento = preordenMedicamento;
+    }
+
+    public Analista getIdauditor() {
+        return idauditor;
+    }
+
+    public void setIdauditor(Analista idauditor) {
+        this.idauditor = idauditor;
     }
     
 }

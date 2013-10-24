@@ -7,6 +7,7 @@ package com.seguroshorizonte.horifarmacia.ws;
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
 import com.seguroshorizonte.horifarmacia.entidades.RegistroIngreso;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -89,19 +90,19 @@ public class WS_mari {
         }
         return null;
     }
-    /* falta agregar facade
-     @WebMethod(operationName = "ingresarAuditoria")
-     public int ingresarAuditoria(@WebParam(name = "PreMedAna") PreordenMedicamentoAnalista PreMedAna) {
-     int Resultado = 0;
-     try {
-     PreordenMedicamentoAnalista PreordMedAna = PreMedAnaServices.obtenerPreordenMedicamentoAnalistaXidPreordenMedicamento(PreMedAna.getPreordMedId());
-     PreMedAna.setIdpreMedAna(PreordMedAna.getIdpreMedAna());
-     PreMedAnaServices.edit(PreMedAna);
-     Resultado = 1;
-     } catch (Exception e) {
-     Resultado = 0;
-     }
-     return Resultado;
-     }
-     */
+
+    @WebMethod(operationName = "ingresarAuditoria")
+    public int ingresarAuditoria(@WebParam(name = "PreMedAna") PreordenMedicamento PreordenMedicamento) {
+        int Resultado = 0;
+        try {
+            PreordenMedicamentoAnalista PreordMedAna = PreMedAnaServices.obtenerPreordenMedicamentoAnalistaXidPreorden(PreordenMedicamento);
+            PreordMedAna.setIdauditor(null);
+            PreordMedAna.setObservacionauditor(null);
+            PreMedAnaServices.edit(PreordMedAna);
+            Resultado = 1;
+        } catch (Exception e) {
+            Resultado = 0;
+        }
+        return Resultado;
+    }
 }
