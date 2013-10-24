@@ -69,8 +69,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
     }
     
-<<<<<<< HEAD
-     public int ContarSHXidAnalista(String IdAnalista) {
+     public int contarSHXidAnalista(String IdAnalista) {
        
         Analista data= new Analista();
         data.setIdanalista(new BigDecimal(IdAnalista));
@@ -78,15 +77,6 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
         Date fecha2;
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-=======
-     public int contarSHXidAnalista(String IdAnalista) {
-         Analista data= new Analista();
-         data.setIdanalista(new BigDecimal(IdAnalista));
-         Date fecha=new Date();
-         Date fecha2;
-       Calendar cal = Calendar.getInstance();
-       Calendar cal2 = Calendar.getInstance();
->>>>>>> 413de27878470f342b70b249eed6b4fae8ae7990
       
         cal.setTime(fecha);
         System.out.print(cal);

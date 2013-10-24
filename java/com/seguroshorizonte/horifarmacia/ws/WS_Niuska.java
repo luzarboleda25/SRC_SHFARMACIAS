@@ -133,7 +133,7 @@ public class WS_Niuska {
                 System.out.println("Analistaaaaaaaa: "+b);
                 idAnalista=listaPMA.get(j).getAnalistaIdanalista().getIdanalista().toString();
                 System.out.println("Analistaaaaaaaa: "+idAnalista);
-                conPA=poMedicamentoAnalistaServices.ContarSHXidAnalista(idAnalista);
+                conPA=poMedicamentoAnalistaServices.contarSHXidAnalista(idAnalista);
                 contAnalistas[j]=conPA;
                 System.out.println("Contadores Analistas: "+idAnalista+ "y" +contAnalistas[j]);
                 j++;
