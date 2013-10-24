@@ -4,13 +4,19 @@
  */
 package com.seguroshorizonte.horifarmacia.ws;
 
+import com.seguroshorizonte.horifarmacia.entidades.Analista;
+import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -21,6 +27,13 @@ public class Joseweb {
     
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade poMedicamentoAnalistaServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenMedicamentoFacade ColaPoMedicamentoServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade AnalistaServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoFacade PreordenMedicamentoServices;
+    
        
 
     /**
@@ -44,15 +57,64 @@ public class Joseweb {
         }
     }
     
-     @WebMethod(operationName = "ContarSHXidAnalista")
-    public int ContarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
+     @WebMethod(operationName = "contarSHXidAnalista")
+    public int contarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
 
         try {
-            int Cont = poMedicamentoAnalistaServices.ContarSHXidAnalista(idAnalista);
+            int Cont = poMedicamentoAnalistaServices.contarSHXidAnalista(idAnalista);
             return Cont;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de PreOrden");
             return 0;
         }
     }
-}
+     
+       @WebMethod(operationName = "extraerDeLaColaXidAnalista")
+    public int extraerDeLaColaXidAnalista(String idAnalista) {
+        
+           try{
+               
+           BigDecimal primeroC = ColaPoMedicamentoServices.primeroCola();
+           ColaPreordenMedicamento primero = ColaPoMedicamentoServices.find(primeroC);
+           Analista analista = AnalistaServices.find(new BigDecimal(idAnalista));
+           PreordenMedicamentoAnalista PMAnalista=new PreordenMedicamentoAnalista();
+           PreordenMedicamento poMA = PreordenMedicamentoServices.find(primero.getPreordenMedicamentoId().getIdpreordenmedicamento());
+           PMAnalista.setFecha(new Date());
+           PMAnalista.setPreordMedId(poMA);
+           PMAnalista.setAnalistaIdanalista(analista);
+           PMAnalista.setEstado("0");
+           ColaPoMedicamentoServices.remove(primero);
+           poMedicamentoAnalistaServices.create(PMAnalista);
+           
+            }catch(Exception ex){
+                   return 0;
+            }
+           
+        return 1;
+        }
+       
+       public int extraerDeLaColaXcodCli(String codCli) {
+        
+           ColaPreordenMedicamento buscar = ColaPoMedicamentoServices.buscarColaXcodCli(codCli);
+           ColaPoMedicamentoServices.remove(buscar);
+         
+           
+           
+          return 0;
+
+
+        }
+       
+        public int extraerDeLaColaXidPreOrden(String idPreOrden) {
+        
+           ColaPreordenMedicamento buscar= ColaPoMedicamentoServices.buscarColaXidPreOrden(idPreOrden);
+           ColaPoMedicamentoServices.remove(buscar);
+           
+           
+          return 0;
+
+
+        }
+    }
+
+  

@@ -5,8 +5,10 @@
 package com.seguroshorizonte.horifarmacia.sessionfacade;
 
 import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -59,5 +61,54 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
         resultCont = query.getSingleResult();
         return resultCont;
     }
+    
+    
+      public int contarSHXidAnalista(String IdAnalista) {
+       
+        
+         Query query = em.createNamedQuery("ColaPreordenMedicamento.findAll", ColaPreordenMedicamento.class);
+        
+
+        List<ColaPreordenMedicamento> resultList = query.getResultList();
+        
+         String contador= resultList.toString();
+         int con=Integer.parseInt(contador);
+        return con;
+
+    }
+     
+     public BigDecimal primeroCola(){
+        
+         
+           Query query = em.createNamedQuery("ColaPreordenMedicamento.findPrimeroCola", ColaPreordenMedicamento.class);
+          Object resultList = query.getSingleResult();
+         String Auxi= resultList.toString();
+        BigDecimal aux = new BigDecimal(Auxi);
+         return aux;
+         
+     }
+     
+     
+     public ColaPreordenMedicamento buscarColaXcodCli(String codCli){
+        
+         
+           Query query = em.createNamedQuery("ColaPreordenMedicamento.findByCodCli", ColaPreordenMedicamento.class);
+           query.setParameter("codCli",codCli);
+
+       ColaPreordenMedicamento resultList = (ColaPreordenMedicamento) query.getSingleResult();
+         return resultList;
+         
+     }
+  
+      public ColaPreordenMedicamento buscarColaXidPreOrden(String idPreOrden){
+        
+         
+           Query query = em.createNamedQuery("ColaPreordenMedicamento.findByColaIdPreOrden", ColaPreordenMedicamento.class);
+           query.setParameter(":idpreorden",new BigDecimal(idPreOrden));
+
+       ColaPreordenMedicamento resultList = (ColaPreordenMedicamento) query.getSingleResult();
+         return resultList;
+         
+     }
     
 }
