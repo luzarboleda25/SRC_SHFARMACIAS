@@ -4,7 +4,10 @@
  */
 package com.seguroshorizonte.horifarmacia.ws;
 
+import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -58,8 +61,8 @@ public class WS_Niuska {
     }
     
     
-    @WebMethod(operationName = "obtenerTotaOperadoresConectadosXEstado")
-    public int obtenerTotaOperadoresConectadosXEstado(@WebParam(name = "estado") String estado) {
+    @WebMethod(operationName = "obtenerTotalOperadoresConectadosXEstado")
+    public int obtenerTotalOperadoresConectadosXEstado(@WebParam(name = "estado") String estado) {
     
         try{
             int operadoresConectados, estadoint;
@@ -107,6 +110,40 @@ public class WS_Niuska {
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
             return 0;
+        }
+    }
+    
+    @WebMethod(operationName = "obtenerProcesadasXAnalista")
+    public int[] obtenerProcesadasXAnalista(@WebParam(name = "estado") String estado) {
+
+        try {
+            List<PreordenMedicamentoAnalista> listaPMA;
+            String idAnalista, a, b;
+            int contAnalistas[];
+            int conPA, tamaño, j=0;
+            
+            listaPMA=poMedicamentoAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
+            tamaño=listaPMA.size();
+            contAnalistas=new int[tamaño];
+            
+            while(listaPMA.size()>j){
+                a=listaPMA.get(0).getAnalistaIdanalista().getIdanalista().toString();
+                System.out.println("Analistaaaaaaaa: "+a);
+                b=listaPMA.get(1).getAnalistaIdanalista().getIdanalista().toString();
+                System.out.println("Analistaaaaaaaa: "+b);
+                idAnalista=listaPMA.get(j).getAnalistaIdanalista().getIdanalista().toString();
+                System.out.println("Analistaaaaaaaa: "+idAnalista);
+                conPA=poMedicamentoAnalistaServices.ContarSHXidAnalista(idAnalista);
+                contAnalistas[j]=conPA;
+                System.out.println("Contadores Analistas: "+idAnalista+ "y" +contAnalistas[j]);
+                j++;
+            }
+             
+            return contAnalistas;
+            
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de Solicitudes Procesadas por Analista");
+            return null;
         }
     }
 }

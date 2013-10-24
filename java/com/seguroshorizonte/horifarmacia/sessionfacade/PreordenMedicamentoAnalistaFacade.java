@@ -35,12 +35,13 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
     }
     
     public List<PreordenMedicamentoAnalista> listarPreOrdenProcesadasXidAnalista(String IdAnalista) {
-         Analista data= new Analista();
-         data.setIdanalista(new BigDecimal(IdAnalista));
-         Date fecha=new Date();
-         Date fecha2;
-       Calendar cal = Calendar.getInstance();
-       Calendar cal2 = Calendar.getInstance();
+        
+        Analista data= new Analista();
+        data.setIdanalista(new BigDecimal(IdAnalista));
+        Date fecha=new Date();
+        Date fecha2;
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
       
         cal.setTime(fecha);
         System.out.print(cal);
@@ -69,12 +70,13 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
     }
     
      public int ContarSHXidAnalista(String IdAnalista) {
-         Analista data= new Analista();
-         data.setIdanalista(new BigDecimal(IdAnalista));
-         Date fecha=new Date();
-         Date fecha2;
-       Calendar cal = Calendar.getInstance();
-       Calendar cal2 = Calendar.getInstance();
+       
+        Analista data= new Analista();
+        data.setIdanalista(new BigDecimal(IdAnalista));
+        Date fecha=new Date();
+        Date fecha2;
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
       
         cal.setTime(fecha);
         System.out.print(cal);
@@ -90,18 +92,16 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
         cal2.set(Calendar.DAY_OF_MONTH, dia);
        
         fecha2=cal2.getTime();
-         Query query;
-         query = em.createNamedQuery("PreordenMedicamentoAnalista.ContarSHXidAnalista", Preorden.class);
-         query.setParameter("analistaIdanalista",data);
-         query.setParameter("fecha1",fecha);
-         query.setParameter("fecha2",fecha2);
-        
-        
+        Query query;
+        query = em.createNamedQuery("PreordenMedicamentoAnalista.ContarSHXidAnalista", Preorden.class);
+        query.setParameter("analistaIdanalista",data);
+        query.setParameter("fecha1",fecha);
+        query.setParameter("fecha2",fecha2);
 
         Object resultList = query.getSingleResult();
         
-         String contador= resultList.toString();
-         int con=Integer.parseInt(contador);
+        String contador= resultList.toString();
+        int con=Integer.parseInt(contador);
         return con;
 
     }
