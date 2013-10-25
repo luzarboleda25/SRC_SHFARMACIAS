@@ -27,7 +27,11 @@ public class WS_Niuska {
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade poMedicamentoAnalistaServices;
    
-    
+ 
+    /**
+     * Servicio que obtiene el total de la cola
+     * @return 
+     */
     @WebMethod(operationName = "obtenerColaPreOrden")
     public int obtenerColaPreOrden() {
         try{
@@ -39,6 +43,10 @@ public class WS_Niuska {
     }
     
     
+    /**
+     * Servicio que obtiene el total de la cola con fecha de hoy
+     * @return
+     */
     @WebMethod(operationName = "obtenerTotalXFechaHoy")
     public int obtenerTotalXFechaHoy() {
         
@@ -58,6 +66,11 @@ public class WS_Niuska {
     }
     
     
+    /**
+     * Servicio que obtiene el total de los operadores conectados con estado "1"
+     * @param estado
+     * @return
+     */
     @WebMethod(operationName = "obtenerTotalOperadoresConectadosXEstado")
     public int obtenerTotalOperadoresConectadosXEstado(@WebParam(name = "estado") String estado) {
     
@@ -78,6 +91,11 @@ public class WS_Niuska {
         }
     }
     
+    /**
+     * Servicio que obtiene la lista de las solicitudes procesadas el día de hoy
+     * @param estado
+     * @return
+     */
     @WebMethod(operationName = "listaSolicitudesProcesadasXFecha")
     public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
 
@@ -92,6 +110,11 @@ public class WS_Niuska {
         }
     }
     
+    /**
+     * Servicio que obtiene el total de solicitudes procesadas por fecha y analista
+     * @param estado
+     * @return
+     */
     @WebMethod(operationName = "obtenerSolicitudesProcesadasXFecha")
     public int obtenerSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
 
@@ -111,6 +134,11 @@ public class WS_Niuska {
     }
     
     
+    /**
+     * Servicio que obtiene el total de las solicitudes procesadas por analista
+     * @param idAnalista
+     * @return
+     */
     @WebMethod(operationName = "contarSHXidAnalista")
     public int contarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
 

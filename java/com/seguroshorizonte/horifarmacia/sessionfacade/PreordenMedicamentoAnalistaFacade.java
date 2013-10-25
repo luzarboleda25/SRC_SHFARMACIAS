@@ -172,9 +172,9 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
     }
 
-    public PreordenMedicamentoAnalista obtenerPreordenMedicamentoAnalistaXidPreorden(PreordenMedicamento idPreordenMedicamento) {
+    public PreordenMedicamentoAnalista obtenerPreordenMedicamentoAnalistaXidPreorden(Preorden idPreorden) {
         Query query = em.createNamedQuery("PreordenMedicamentoAnalista.findByIdpreMedAna", PreordenMedicamentoAnalista.class);
-        query.setParameter("idpreMedAna", idPreordenMedicamento);
+        query.setParameter("idpreMedAna", idPreorden);
         PreordenMedicamentoAnalista Resultado = (PreordenMedicamentoAnalista) query.getSingleResult();
         return Resultado;
     }
