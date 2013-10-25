@@ -4,10 +4,7 @@
  */
 package com.seguroshorizonte.horifarmacia.ws;
 
-import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -113,37 +110,17 @@ public class WS_Niuska {
         }
     }
     
-    @WebMethod(operationName = "obtenerProcesadasXAnalista")
-    public int[] obtenerProcesadasXAnalista(@WebParam(name = "estado") String estado) {
+    
+    @WebMethod(operationName = "contarSHXidAnalista")
+    public int contarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
 
         try {
-            List<PreordenMedicamentoAnalista> listaPMA;
-            String idAnalista, a, b;
-            int contAnalistas[];
-            int conPA, tamaño, j=0;
-            
-            listaPMA=poMedicamentoAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
-            tamaño=listaPMA.size();
-            contAnalistas=new int[tamaño];
-            
-            while(listaPMA.size()>j){
-                a=listaPMA.get(0).getAnalistaIdanalista().getIdanalista().toString();
-                System.out.println("Analistaaaaaaaa: "+a);
-                b=listaPMA.get(1).getAnalistaIdanalista().getIdanalista().toString();
-                System.out.println("Analistaaaaaaaa: "+b);
-                idAnalista=listaPMA.get(j).getAnalistaIdanalista().getIdanalista().toString();
-                System.out.println("Analistaaaaaaaa: "+idAnalista);
-                conPA=poMedicamentoAnalistaServices.contarSHXidAnalista(idAnalista);
-                contAnalistas[j]=conPA;
-                System.out.println("Contadores Analistas: "+idAnalista+ "y" +contAnalistas[j]);
-                j++;
-            }
-             
-            return contAnalistas;
-            
+            int Cont = poMedicamentoAnalistaServices.contarSHXidAnalista(idAnalista);
+            return Cont;
         } catch (Exception ex) {
-            System.out.println("ERROR de la busqueda de Solicitudes Procesadas por Analista");
-            return null;
+            System.out.println("ERROR de la busqueda de PreOrden");
+            return 0;
         }
     }
+    
 }
