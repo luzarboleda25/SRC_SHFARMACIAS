@@ -4,13 +4,17 @@
  */
 package com.seguroshorizonte.horifarmacia.sessionfacade;
 
+import com.seguroshorizonte.horifarmacia.entidades.Analista;
+import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import com.seguroshorizonte.horifarmacia.entidades.RegistroIngreso;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -31,34 +35,23 @@ public class RegistroIngresoFacade extends AbstractFacade<RegistroIngreso> {
         
     }
     
-    public int diasTrajadosXSemana(String idAnalista){
+    public int diasTrajadosXSemana(String idAnalista, Date fecha, Date fecha2){
         
+        Analista data = new Analista();
+        data.setIdanalista(new BigDecimal(idAnalista));
+       
         
-        GregorianCalendar cal = new GregorianCalendar();
-	int  diaSemana=cal.get(Calendar.DAY_OF_WEEK);     
-        diaSemana=diaSemana-2;
-        Date fecha = new Date();
-        Date fecha2;
-        cal.setTime(fecha);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        int dia2=dia++;
-        cal.set(Calendar.DAY_OF_MONTH, dia2);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        fecha2 = cal.getTime();
-        int lunes=dia-diaSemana;
-        cal.set(Calendar.DAY_OF_MONTH, lunes);
-        fecha = cal.getTime();
-        
-        System.out.print(fecha);
-        System.out.print(fecha2);
-        
-        
+        Query query = em.createNamedQuery("RegistroIngreso.diasTrabajadosXS", Preorden.class);
+        query.setParameter("analistaIdanalista", data);
+        query.setParameter("fecha1", fecha);
+        query.setParameter("fecha2", fecha2);
 
       
-        return 0;
+        Object resultList = query.getSingleResult();
+
+        String contador = resultList.toString();
+        int con = Integer.parseInt(contador);
+        return con;
         
     }
     

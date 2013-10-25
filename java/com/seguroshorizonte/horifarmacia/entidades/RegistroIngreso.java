@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RegistroIngreso.findAll", query = "SELECT r FROM RegistroIngreso r"),
     @NamedQuery(name = "RegistroIngreso.findById", query = "SELECT r FROM RegistroIngreso r WHERE r.id = :id"),
+    @NamedQuery(name = "RegistroIngreso.diasTrabajadosXS", query = "SELECT count(r) FROM RegistroIngreso r WHERE r.analistaIdanalista = :analistaIdanalista AND r.fecha between :fecha1 AND :fecha2"),
     @NamedQuery(name = "RegistroIngreso.findByFecha", query = "SELECT r FROM RegistroIngreso r WHERE r.fecha = :fecha")})
 public class RegistroIngreso implements Serializable {
     private static final long serialVersionUID = 1L;

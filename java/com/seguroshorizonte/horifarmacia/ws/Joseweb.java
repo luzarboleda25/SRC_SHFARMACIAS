@@ -123,7 +123,29 @@ public class Joseweb {
         
         public int promedioSolicitudesXidAnalista(String idAnalista){
        
-        int buscarDTS = RegistroIngresoServices.diasTrajadosXSemana(idAnalista);
+         Analista data = new Analista();
+        data.setIdanalista(new BigDecimal(idAnalista));
+        GregorianCalendar cal = new GregorianCalendar();
+	int  diaSemana=cal.get(Calendar.DAY_OF_WEEK);     
+        diaSemana=diaSemana-2;
+        Date fecha = new Date();
+        System.out.print(fecha);
+        Date fecha2;
+        cal.setTime(fecha);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        System.out.print(dia);
+        int dia2=dia+1;
+        cal.set(Calendar.DAY_OF_MONTH, dia2);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        fecha2 = cal.getTime();
+        int lunes=dia-diaSemana;
+        cal.set(Calendar.DAY_OF_MONTH, lunes);
+        fecha = cal.getTime();
+            
+        int buscarDTS = RegistroIngresoServices.diasTrajadosXSemana(idAnalista,fecha,fecha2);
         
 	
         
