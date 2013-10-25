@@ -9,7 +9,9 @@ import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -33,6 +35,8 @@ public class Joseweb {
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade AnalistaServices;
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoFacade PreordenMedicamentoServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.RegistroIngresoFacade RegistroIngresoServices;
     
        
 
@@ -80,7 +84,7 @@ public class Joseweb {
            PreordenMedicamentoAnalista PMAnalista=new PreordenMedicamentoAnalista();
            PreordenMedicamento poMA = PreordenMedicamentoServices.find(primero.getPreordenMedicamentoId().getIdpreordenmedicamento());
            PMAnalista.setFecha(new Date());
-           PMAnalista.setPreordMedId(poMA);
+           //
            PMAnalista.setAnalistaIdanalista(analista);
            PMAnalista.setEstado("0");
            ColaPoMedicamentoServices.remove(primero);
@@ -114,6 +118,17 @@ public class Joseweb {
           return 0;
 
 
+        }
+        
+        
+        public int promedioSolicitudesXidAnalista(String idAnalista){
+       
+        int buscarDTS = RegistroIngresoServices.diasTrajadosXSemana(idAnalista);
+        
+	
+        
+            
+            return buscarDTS;
         }
     }
 

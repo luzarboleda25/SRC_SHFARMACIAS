@@ -31,7 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "FarmaciaMedicamento.findByPrecio", query = "SELECT f FROM FarmaciaMedicamento f WHERE f.precio = :precio"),
     @NamedQuery(name = "FarmaciaMedicamento.findByIva", query = "SELECT f FROM FarmaciaMedicamento f WHERE f.iva = :iva")})
 public class FarmaciaMedicamento implements Serializable {
+    private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "IDFARMEDI")
+    private BigDecimal idfarmedi;
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRECIO")
@@ -40,13 +46,6 @@ public class FarmaciaMedicamento implements Serializable {
     @NotNull
     @Column(name = "IVA")
     private Serializable iva;
-    private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "IDFARMEDI")
-    private BigDecimal idfarmedi;
     @JoinColumn(name = "IDMEDICAMENTO", referencedColumnName = "IDMEDICAMENTO")
     @ManyToOne(optional = false)
     private Medicamento idmedicamento;
@@ -73,6 +72,22 @@ public class FarmaciaMedicamento implements Serializable {
 
     public void setIdfarmedi(BigDecimal idfarmedi) {
         this.idfarmedi = idfarmedi;
+    }
+
+    public Serializable getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Serializable precio) {
+        this.precio = precio;
+    }
+
+    public Serializable getIva() {
+        return iva;
+    }
+
+    public void setIva(Serializable iva) {
+        this.iva = iva;
     }
 
     public Medicamento getIdmedicamento() {
@@ -114,22 +129,6 @@ public class FarmaciaMedicamento implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.FarmaciaMedicamento[ idfarmedi=" + idfarmedi + " ]";
-    }
-
-    public Serializable getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Serializable precio) {
-        this.precio = precio;
-    }
-
-    public Serializable getIva() {
-        return iva;
-    }
-
-    public void setIva(Serializable iva) {
-        this.iva = iva;
     }
     
 }

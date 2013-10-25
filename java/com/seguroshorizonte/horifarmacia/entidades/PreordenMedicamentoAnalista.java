@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,25 +35,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByIdpreMedAna", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.idpreMedAna = :idpreMedAna"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByFecha", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.fecha = :fecha"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByEstado", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado"),
-    @NamedQuery(name = "PreordenMedicamentoAnalista.ContarSHXidAnalista", query = "SELECT COUNT(p.idpreMedAna)  FROM PreordenMedicamentoAnalista p WHERE p.analistaIdanalista = :analistaIdanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
-    @NamedQuery(name = "PreordenMedicamentoAnalista.findByIdAnalista", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.analistaIdanalista = :analistaIdanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
-    @NamedQuery(name = "PreordenMedicamentoAnalista.findByProcesadaFechaHoy", query = "SELECT DISTINCT p.analistaIdanalista FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
-    @NamedQuery(name = "PreordenMedicamentoAnalista.findByContadorProcesadas", query = "SELECT COUNT(p) FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
-    @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacion", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacion = :observacion")})
+    @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacion", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacion = :observacion"),
+    @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacionauditor", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacionauditor = :observacionauditor")})
 public class PreordenMedicamentoAnalista implements Serializable {
-    @JoinColumn(name = "IDPRE_MED_ANA", referencedColumnName = "IDPREORDENMEDICAMENTO")
-    @OneToOne(optional = false)
-    private PreordenMedicamento preordenMedicamento;
-    @JoinColumn(name = "IDAUDITOR", referencedColumnName = "IDANALISTA")
-    @ManyToOne
-    private Analista idauditor;
-    @Size(max = 255)
-    @Column(name = "OBSERVACIONAUDITOR")
-    private String observacionauditor;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "IDPRE_MED_ANA")
     private BigDecimal idpreMedAna;
     @Column(name = "FECHA")
@@ -64,12 +54,18 @@ public class PreordenMedicamentoAnalista implements Serializable {
     @Size(max = 255)
     @Column(name = "OBSERVACION")
     private String observacion;
-    @JoinColumn(name = "PREORD_MED_ID", referencedColumnName = "IDPREORDENMEDICAMENTO")
-    @ManyToOne(optional = false)
-    private PreordenMedicamento preordMedId;
+    @Size(max = 255)
+    @Column(name = "OBSERVACIONAUDITOR")
+    private String observacionauditor;
+    @JoinColumn(name = "IDPRE_MED_ANA", referencedColumnName = "IDPREORDEN", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Preorden preorden;
     @JoinColumn(name = "ANALISTA_IDANALISTA", referencedColumnName = "IDANALISTA")
     @ManyToOne(optional = false)
     private Analista analistaIdanalista;
+    @JoinColumn(name = "IDAUDITOR", referencedColumnName = "IDANALISTA")
+    @ManyToOne
+    private Analista idauditor;
 
     public PreordenMedicamentoAnalista() {
     }
@@ -110,12 +106,20 @@ public class PreordenMedicamentoAnalista implements Serializable {
         this.observacion = observacion;
     }
 
-    public PreordenMedicamento getPreordMedId() {
-        return preordMedId;
+    public String getObservacionauditor() {
+        return observacionauditor;
     }
 
-    public void setPreordMedId(PreordenMedicamento preordMedId) {
-        this.preordMedId = preordMedId;
+    public void setObservacionauditor(String observacionauditor) {
+        this.observacionauditor = observacionauditor;
+    }
+
+    public Preorden getPreorden() {
+        return preorden;
+    }
+
+    public void setPreorden(Preorden preorden) {
+        this.preorden = preorden;
     }
 
     public Analista getAnalistaIdanalista() {
@@ -124,6 +128,14 @@ public class PreordenMedicamentoAnalista implements Serializable {
 
     public void setAnalistaIdanalista(Analista analistaIdanalista) {
         this.analistaIdanalista = analistaIdanalista;
+    }
+
+    public Analista getIdauditor() {
+        return idauditor;
+    }
+
+    public void setIdauditor(Analista idauditor) {
+        this.idauditor = idauditor;
     }
 
     @Override
@@ -149,30 +161,6 @@ public class PreordenMedicamentoAnalista implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista[ idpreMedAna=" + idpreMedAna + " ]";
-    }
-
-    public String getObservacionauditor() {
-        return observacionauditor;
-    }
-
-    public void setObservacionauditor(String observacionauditor) {
-        this.observacionauditor = observacionauditor;
-    }
-
-    public PreordenMedicamento getPreordenMedicamento() {
-        return preordenMedicamento;
-    }
-
-    public void setPreordenMedicamento(PreordenMedicamento preordenMedicamento) {
-        this.preordenMedicamento = preordenMedicamento;
-    }
-
-    public Analista getIdauditor() {
-        return idauditor;
-    }
-
-    public void setIdauditor(Analista idauditor) {
-        this.idauditor = idauditor;
     }
     
 }

@@ -7,30 +7,22 @@ package com.seguroshorizonte.horifarmacia.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Gedica
+ * @author Pangea
  */
 @Entity
 @Table(name = "PREORDEN_MEDICAMENTO")
@@ -39,20 +31,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PreordenMedicamento.findAll", query = "SELECT p FROM PreordenMedicamento p"),
     @NamedQuery(name = "PreordenMedicamento.findByIdpreordenmedicamento", query = "SELECT p FROM PreordenMedicamento p WHERE p.idpreordenmedicamento = :idpreordenmedicamento"),
     @NamedQuery(name = "PreordenMedicamento.findByDuracion", query = "SELECT p FROM PreordenMedicamento p WHERE p.duracion = :duracion"),
-    @NamedQuery(name = "PreordenMedicamento.findByIdpreorden", query = "SELECT p FROM PreordenMedicamento p WHERE p.idpreorden = :idpreorden"),
     @NamedQuery(name = "PreordenMedicamento.findByCantidad", query = "SELECT p FROM PreordenMedicamento p WHERE p.cantidad = :cantidad"),
     @NamedQuery(name = "PreordenMedicamento.findByEntregado", query = "SELECT p FROM PreordenMedicamento p WHERE p.entregado = :entregado")})
 public class PreordenMedicamento implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preordMedId")
-    private Collection<PreordenMedicamentoAnalista> preordenMedicamentoAnalistaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preordenMedicamentoId")
-    private Collection<ColaPreordenMedicamento> colaPreordenMedicamentoCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQPREORDENMEDICAMENTO")
-    @SequenceGenerator(name = "SQPREORDENMEDICAMENTO", sequenceName = "SQ_PO_MEDICAMENTO",initialValue=1, allocationSize = 1)
+    @NotNull
     @Column(name = "IDPREORDENMEDICAMENTO")
     private BigDecimal idpreordenmedicamento;
     @Basic(optional = false)
@@ -77,8 +63,6 @@ public class PreordenMedicamento implements Serializable {
     @JoinColumn(name = "IDDOSIS", referencedColumnName = "IDDOSIS")
     @ManyToOne(optional = false)
     private Dosis iddosis;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpomedicamento")
-    private List<Orden> ordenList;
 
     public PreordenMedicamento() {
     }
@@ -150,15 +134,6 @@ public class PreordenMedicamento implements Serializable {
         this.iddosis = iddosis;
     }
 
-    @XmlTransient
-    public List<Orden> getOrdenList() {
-        return ordenList;
-    }
-
-    public void setOrdenList(List<Orden> ordenList) {
-        this.ordenList = ordenList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -182,24 +157,6 @@ public class PreordenMedicamento implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento[ idpreordenmedicamento=" + idpreordenmedicamento + " ]";
-    }
-
-    @XmlTransient
-    public Collection<PreordenMedicamentoAnalista> getPreordenMedicamentoAnalistaCollection() {
-        return preordenMedicamentoAnalistaCollection;
-    }
-
-    public void setPreordenMedicamentoAnalistaCollection(Collection<PreordenMedicamentoAnalista> preordenMedicamentoAnalistaCollection) {
-        this.preordenMedicamentoAnalistaCollection = preordenMedicamentoAnalistaCollection;
-    }
-
-    @XmlTransient
-    public Collection<ColaPreordenMedicamento> getColaPreordenMedicamentoCollection() {
-        return colaPreordenMedicamentoCollection;
-    }
-
-    public void setColaPreordenMedicamentoCollection(Collection<ColaPreordenMedicamento> colaPreordenMedicamentoCollection) {
-        this.colaPreordenMedicamentoCollection = colaPreordenMedicamentoCollection;
     }
     
 }

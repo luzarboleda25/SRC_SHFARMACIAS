@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -61,6 +62,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Preorden.findByReconsiderar", query = "SELECT p FROM Preorden p WHERE p.reconsiderar = :reconsiderar"),
     @NamedQuery(name = "Preorden.findByReconsiderarObservaciones", query = "SELECT p FROM Preorden p WHERE p.reconsiderarObservaciones = :reconsiderarObservaciones")})
 public class Preorden implements Serializable {
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "preorden")
+    private PreordenMedicamentoAnalista preordenMedicamentoAnalista;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -417,6 +420,14 @@ public class Preorden implements Serializable {
     @Override
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.Preorden[ idpreorden=" + idpreorden + " ]";
+    }
+
+    public PreordenMedicamentoAnalista getPreordenMedicamentoAnalista() {
+        return preordenMedicamentoAnalista;
+    }
+
+    public void setPreordenMedicamentoAnalista(PreordenMedicamentoAnalista preordenMedicamentoAnalista) {
+        this.preordenMedicamentoAnalista = preordenMedicamentoAnalista;
     }
     
 }
