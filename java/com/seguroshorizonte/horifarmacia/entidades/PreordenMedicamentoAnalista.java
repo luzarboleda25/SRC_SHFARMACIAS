@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByEstado", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacion", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacion = :observacion"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByObservacionauditor", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.observacionauditor = :observacionauditor"),
+    @NamedQuery(name = "PreordenMedicamentoAnalista.ContarSHXidAnalista", query = "SELECT COUNT(p.idpreMedAna)  FROM PreordenMedicamentoAnalista p WHERE p.analistaIdanalista = :analistaIdanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
+    @NamedQuery(name = "PreordenMedicamentoAnalista.findByIdAnalista", query = "SELECT p FROM PreordenMedicamentoAnalista p WHERE p.analistaIdanalista = :analistaIdanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByProcesadaFechaHoy", query = "SELECT DISTINCT p.analistaIdanalista FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenMedicamentoAnalista.findByContadorProcesadas", query = "SELECT COUNT(p) FROM PreordenMedicamentoAnalista p WHERE p.estado = :estado AND p.fecha BETWEEN :fecha1 and :fecha2")})
 public class PreordenMedicamentoAnalista implements Serializable {
