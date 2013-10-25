@@ -92,12 +92,12 @@ public class WS_mari {
     }
 
     @WebMethod(operationName = "ingresarAuditoria")
-    public int ingresarAuditoria(@WebParam(name = "PreMedAna") PreordenMedicamento PreordenMedicamento) {
+    public int ingresarAuditoria(@WebParam(name = "PreMedAna") Preorden Preordenn, Analista Auditor, String Observacion) {
         int Resultado = 0;
         try {
-            PreordenMedicamentoAnalista PreordMedAna = PreMedAnaServices.obtenerPreordenMedicamentoAnalistaXidPreorden(PreordenMedicamento);
-            PreordMedAna.setIdauditor(null);
-            PreordMedAna.setObservacionauditor(null);
+            PreordenMedicamentoAnalista PreordMedAna = PreMedAnaServices.obtenerPreordenMedicamentoAnalistaXidPreorden(Preordenn);
+            PreordMedAna.setIdauditor(Auditor);
+            PreordMedAna.setObservacionauditor(Observacion);
             PreMedAnaServices.edit(PreordMedAna);
             Resultado = 1;
         } catch (Exception e) {
