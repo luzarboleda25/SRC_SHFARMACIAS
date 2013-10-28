@@ -37,12 +37,22 @@ public class WS_mari {
 
     /**
      * This is a sample web service operation
+     *
+     * @param txt
+     * @return
      */
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
     }
 
+    /**
+     * Método encargado de verificar si el usuario y la contraseña coinciden
+     * para el inicio de sesión
+     *
+     * @param Analistaa
+     * @return
+     */
     @WebMethod(operationName = "logIn")
     public int logIn(@WebParam(name = "Analistaa") Analista Analistaa) {
         int Respuesta = 0;
@@ -57,6 +67,13 @@ public class WS_mari {
         return Respuesta;
     }
 
+    /**
+     * Método encargado de obtener la información del analista por medio del
+     * nombre de usuario y realizar el registro de ingreso en la base de datos
+     *
+     * @param Usuario String que contiene el nombre de usuario
+     * @return un objeto de la entidad Analista con la información del analista
+     */
     @WebMethod(operationName = "obtenerAnalistaXUsuario")
     public Analista obtenerAnalistaXUsuario(@WebParam(name = "Usuario") String Usuario) {
         Analista Resultado = new Analista();
@@ -77,6 +94,13 @@ public class WS_mari {
         return Resultado;
     }
 
+    /**
+     * Método en el cual se obtiene una lista de la entidad PreordenMedicamento
+     * por medio del id de Preorden
+     *
+     * @param idPreorden
+     * @return
+     */
     @WebMethod(operationName = "obtenerPreordenMedicamentoXIdPreorden")
     public List<PreordenMedicamento> obtenerPreordenMedicamentoXIdPreorden(@WebParam(name = "idPreorden") String idPreorden) {
         if (idPreorden == null) {
@@ -91,6 +115,14 @@ public class WS_mari {
         return null;
     }
 
+    /**
+     * Método que ingresa la auditoria hecha a una preorden ya procesada
+     *
+     * @param Preordenn
+     * @param Auditor
+     * @param Observacion
+     * @return
+     */
     @WebMethod(operationName = "ingresarAuditoria")
     public int ingresarAuditoria(@WebParam(name = "PreMedAna") Preorden Preordenn, Analista Auditor, String Observacion) {
         int Resultado = 0;
