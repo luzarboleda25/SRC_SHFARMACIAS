@@ -146,11 +146,16 @@ public class Joseweb {
         fecha = cal.getTime();
             
         int buscarDTS = RegistroIngresoServices.diasTrajadosXSemana(idAnalista,fecha,fecha2);
+        int buscarSS = poMedicamentoAnalistaServices.contarSHXidAnalistaXS(idAnalista, fecha, fecha2);
+        int promedio;
         
-	
-        
+        if(buscarDTS==0 || buscarSS==0){
+            promedio=0;
+        }else {
+             promedio= buscarSS/buscarDTS;
+        }
             
-            return buscarDTS;
+            return promedio;
         }
     }
 

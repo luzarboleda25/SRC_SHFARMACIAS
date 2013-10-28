@@ -40,6 +40,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
         Analista data = new Analista();
         data.setIdanalista(new BigDecimal(IdAnalista));
+        
         Date fecha = new Date();
         Date fecha2;
         Calendar cal = Calendar.getInstance();
@@ -108,6 +109,29 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
     }
 
+    
+     public int contarSHXidAnalistaXS(String IdAnalista,Date fecha, Date fecha2) {
+
+        Analista data = new Analista();
+        data.setIdanalista(new BigDecimal(IdAnalista));
+        
+        Query query;
+        query = em.createNamedQuery("PreordenMedicamentoAnalista.ContarSHXidAnalista", Preorden.class);
+        query.setParameter("analistaIdanalista", data);
+        query.setParameter("fecha1", fecha);
+        query.setParameter("fecha2", fecha2);
+
+        Object resultList = query.getSingleResult();
+
+        String contador = resultList.toString();
+        int con = Integer.parseInt(contador);
+        return con;
+
+    }
+
+    
+    
+    
     public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(String estado) {
 
         Date fecha = new Date();
