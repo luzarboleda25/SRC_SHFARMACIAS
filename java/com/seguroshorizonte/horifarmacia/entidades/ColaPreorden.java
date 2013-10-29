@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ColaPreorden.findPrimeroCola", query = "SELECT MIN(c.idcolapreorden) FROM ColaPreorden c"),
     @NamedQuery(name = "ColaPreorden.findByCodCli", query = "SELECT c FROM ColaPreorden c WHERE c.idpreorden.codcli = :codcli"),
     @NamedQuery(name = "ColaPreorden.findByColaIdPreOrden", query = "SELECT c FROM ColaPreorden c WHERE c.idpreorden = :idpreorden"),
-    @NamedQuery(name = "ColaPreorden.findByFechaHoy", query = "SELECT COUNT(c.idcolapreorden) FROM ColaPreorden c WHERE c.fecha BETWEEN :fecha1 AND :fecha2")})
+    @NamedQuery(name = "ColaPreorden.findByColaFechaHoy", query = "SELECT COUNT(c) FROM ColaPreorden c WHERE c.fecha BETWEEN :fecha1 and :fecha2")})
 public class ColaPreorden implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

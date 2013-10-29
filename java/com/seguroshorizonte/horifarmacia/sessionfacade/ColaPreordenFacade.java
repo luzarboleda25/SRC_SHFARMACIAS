@@ -55,7 +55,7 @@ public class ColaPreordenFacade extends AbstractFacade<ColaPreorden> {
         fecha2=cal2.getTime();
         
         Object resultCont;
-        Query query = em.createNamedQuery("ColaPreorden.findByFechaHoy", ColaPreorden.class);
+        Query query = em.createNamedQuery("ColaPreorden.findByColaFechaHoy", ColaPreorden.class);
         query.setParameter("fecha1",fecha);
         query.setParameter("fecha2",fecha2);
         resultCont = query.getSingleResult();
