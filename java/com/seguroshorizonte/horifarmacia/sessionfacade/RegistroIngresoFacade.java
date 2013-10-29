@@ -42,7 +42,7 @@ public class RegistroIngresoFacade extends AbstractFacade<RegistroIngreso> {
        
         
         Query query = em.createNamedQuery("RegistroIngreso.diasTrabajadosXS", Preorden.class);
-        query.setParameter("analistaIdanalista", data);
+        query.setParameter("idanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
         String contador;
