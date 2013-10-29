@@ -36,22 +36,5 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
         return resultCont;
     }
 
-    public int verificarLogIn(Analista Analistaa) {
-        Query query = em.createNamedQuery("Analista.findByUsuarioYContrasena", Analista.class);
-        query.setParameter("usuario", Analistaa.getUsuario());
-        query.setParameter("contrasena", Analistaa.getContrasena());
-        Analista Resultado = (Analista) query.getSingleResult();
-        if (Resultado == null) {
-            return 0;
-        }
-        return 1;
-    }
-
-    public Analista obtenerAnalistaXUsuario(String Usuario) {
-        Query query = em.createNamedQuery("Analista.findByUsuario", Analista.class);
-        query.setParameter("usuario",Usuario);
-        Analista Resultado = (Analista) query.getSingleResult();
-        return Resultado;
-    }
     
 }
