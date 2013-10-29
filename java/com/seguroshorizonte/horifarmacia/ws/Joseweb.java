@@ -54,6 +54,14 @@ public class Joseweb {
         try {
             List<PreordenMedicamentoAnalista> listaPMA;
             listaPMA = poMedicamentoAnalistaServices.listarPreOrdenProcesadasXidAnalista(idAnalista);
+           int j=0;
+            while(listaPMA.size()>j){
+                listaPMA.get(j).getPreorden().setPreordenMedicamentoAnalista(null);
+                listaPMA.get(j).getPreorden().setPreordenMedicamentoList(null);
+                j++;
+            }
+            
+            
             return listaPMA;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de PreOrden");
@@ -74,7 +82,7 @@ public class Joseweb {
     }
      
        @WebMethod(operationName = "extraerDeLaColaXidAnalista")
-    public int extraerDeLaColaXidAnalista(String idAnalista) {
+    public int extraerDeLaColaXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
         
            try{
                
@@ -96,8 +104,8 @@ public class Joseweb {
            
         return 1;
         }
-       
-       public int extraerDeLaColaXcodCli(String codCli) {
+       @WebMethod(operationName = "extraerDeLaColaXcodCli")
+       public int extraerDeLaColaXcodCli(@WebParam(name = "codCli")String codCli) {
         
            ColaPreordenMedicamento buscar = ColaPoMedicamentoServices.buscarColaXcodCli(codCli);
            ColaPoMedicamentoServices.remove(buscar);
@@ -108,8 +116,8 @@ public class Joseweb {
 
 
         }
-       
-        public int extraerDeLaColaXidPreOrden(String idPreOrden) {
+       @WebMethod(operationName = "extraerDeLaColaXidPreOrden")
+        public int extraerDeLaColaXidPreOrden(@WebParam(name = "idPreOrden")String idPreOrden) {
         
            ColaPreordenMedicamento buscar= ColaPoMedicamentoServices.buscarColaXidPreOrden(idPreOrden);
            ColaPoMedicamentoServices.remove(buscar);
@@ -120,12 +128,14 @@ public class Joseweb {
 
         }
         
-        
-        public int promedioSolicitudesXidAnalista(String idAnalista){
+        @WebMethod(operationName = "promedioSolicitudesXidAnalista")
+        public int promedioSolicitudesXidAnalista(@WebParam(name = "idAnalista")String idAnalista){
        
-         Analista data = new Analista();
-        data.setIdanalista(new BigDecimal(idAnalista));
+        
         GregorianCalendar cal = new GregorianCalendar();
+        Analista data = new Analista();
+        data.setIdanalista(new BigDecimal(idAnalista));
+        
 	int  diaSemana=cal.get(Calendar.DAY_OF_WEEK);     
         diaSemana=diaSemana-2;
         Date fecha = new Date();
@@ -152,7 +162,7 @@ public class Joseweb {
         if(buscarDTS==0 || buscarSS==0){
             promedio=0;
         }else {
-             promedio= buscarSS/buscarDTS;
+            promedio= buscarSS/buscarDTS;
         }
             
             return promedio;

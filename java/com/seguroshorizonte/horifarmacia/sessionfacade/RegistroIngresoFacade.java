@@ -54,13 +54,7 @@ public class RegistroIngresoFacade extends AbstractFacade<RegistroIngreso> {
         
         if(con==0){
             Date f=new Date();
-//            GregorianCalendar cal = new GregorianCalendar();
-//            cal.setTime(f);
-//            cal.set(Calendar.HOUR_OF_DAY, 0);
-//            cal.set(Calendar.MINUTE, 0);
-//            cal.set(Calendar.SECOND, 0);
-//            cal.set(Calendar.MILLISECOND, 0);
-//            f = cal.getTime();
+//            
             if(fecha.getDay()==f.getDay()){
                 con=1;
             }else{
