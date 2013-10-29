@@ -5,9 +5,9 @@
 package com.seguroshorizonte.horifarmacia.ws;
 
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
-import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
+import com.seguroshorizonte.horifarmacia.entidades.ColaPreorden;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
-import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenAnalista;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,9 +28,9 @@ import javax.persistence.EntityManagerFactory;
 public class Joseweb {
     
     @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade poMedicamentoAnalistaServices;
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade poMedicamentoAnalistaServices;
     @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenMedicamentoFacade ColaPoMedicamentoServices;
+    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenFacade ColaPoMedicamentoServices;
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade AnalistaServices;
     @EJB
@@ -48,15 +48,15 @@ public class Joseweb {
         return "Hello " + txt + " !";
     }
     
-    @WebMethod(operationName = "listaPreordenMedicamentoAnalistaXidAnalista")
-    public List<PreordenMedicamentoAnalista> listaPreordenMedicamentoAnalistaXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
+    @WebMethod(operationName = "listaPreordenAnalistaXidAnalista")
+    public List<PreordenAnalista> listaPreordenAnalistaXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
 
         try {
-            List<PreordenMedicamentoAnalista> listaPMA;
+            List<PreordenAnalista> listaPMA;
             listaPMA = poMedicamentoAnalistaServices.listarPreOrdenProcesadasXidAnalista(idAnalista);
            int j=0;
             while(listaPMA.size()>j){
-                listaPMA.get(j).getPreorden().setPreordenMedicamentoAnalista(null);
+                listaPMA.get(j).getPreorden().setPreordenAnalista(null);
                 listaPMA.get(j).getPreorden().setPreordenMedicamentoList(null);
                 j++;
             }
@@ -87,14 +87,14 @@ public class Joseweb {
            try{
                
            BigDecimal primeroC = ColaPoMedicamentoServices.primeroCola();
-           ColaPreordenMedicamento primero = ColaPoMedicamentoServices.find(primeroC);
+           ColaPreorden primero = ColaPoMedicamentoServices.find(primeroC);
            Analista analista = AnalistaServices.find(new BigDecimal(idAnalista));
-           PreordenMedicamentoAnalista PMAnalista=new PreordenMedicamentoAnalista();
-           PreordenMedicamento poMA = PreordenMedicamentoServices.find(primero.getPreordenMedicamentoId().getIdpreordenmedicamento());
+           PreordenAnalista PMAnalista=new PreordenAnalista();
+           
            PMAnalista.setFecha(new Date());
            //
-           PMAnalista.setAnalistaIdanalista(analista);
-           PMAnalista.setEstado("0");
+           PMAnalista.setIdanalista(analista);
+           PMAnalista.setStatus("0");
            ColaPoMedicamentoServices.remove(primero);
            poMedicamentoAnalistaServices.create(PMAnalista);
            
@@ -107,7 +107,7 @@ public class Joseweb {
        @WebMethod(operationName = "extraerDeLaColaXcodCli")
        public int extraerDeLaColaXcodCli(@WebParam(name = "codCli")String codCli) {
         
-           ColaPreordenMedicamento buscar = ColaPoMedicamentoServices.buscarColaXcodCli(codCli);
+           ColaPreorden buscar = ColaPoMedicamentoServices.buscarColaXcodCli(codCli);
            ColaPoMedicamentoServices.remove(buscar);
          
            
@@ -119,7 +119,7 @@ public class Joseweb {
        @WebMethod(operationName = "extraerDeLaColaXidPreOrden")
         public int extraerDeLaColaXidPreOrden(@WebParam(name = "idPreOrden")String idPreOrden) {
         
-           ColaPreordenMedicamento buscar= ColaPoMedicamentoServices.buscarColaXidPreOrden(idPreOrden);
+           ColaPreorden buscar= ColaPoMedicamentoServices.buscarColaXidPreOrden(idPreOrden);
            ColaPoMedicamentoServices.remove(buscar);
            
            

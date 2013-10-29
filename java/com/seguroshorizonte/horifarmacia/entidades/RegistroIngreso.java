@@ -33,39 +33,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RegistroIngreso.findAll", query = "SELECT r FROM RegistroIngreso r"),
-    @NamedQuery(name = "RegistroIngreso.findById", query = "SELECT r FROM RegistroIngreso r WHERE r.id = :id"),
-    @NamedQuery(name = "RegistroIngreso.diasTrabajadosXS", query = "SELECT count(r) FROM RegistroIngreso r WHERE r.analistaIdanalista = :analistaIdanalista AND r.fecha between :fecha1 AND :fecha2"),
+    @NamedQuery(name = "RegistroIngreso.findById", query = "SELECT r FROM RegistroIngreso r WHERE r.idregistroingreso = :idregistroingreso"),
+    @NamedQuery(name = "RegistroIngreso.diasTrabajadosXS", query = "SELECT count(r) FROM RegistroIngreso r WHERE r.idanalista = :idanalista AND r.fecha between :fecha1 AND :fecha2"),
     @NamedQuery(name = "RegistroIngreso.findByFecha", query = "SELECT r FROM RegistroIngreso r WHERE r.fecha = :fecha")})
+
 public class RegistroIngreso implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
+    
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_REGISTRO_INGRESO")
-    @SequenceGenerator(name = "SQ_REGISTRO_INGRESO", sequenceName = "SQ_REGISTRO_INGRESO", allocationSize = 1)
+   @SequenceGenerator(name = "SQ_REGISTRO_INGRESO", sequenceName = "SQ_REGISTRO_INGRESO", allocationSize = 1)
+    @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID")
-    private BigDecimal id;
+    @Column(name = "IDREGISTROINGRESO")
+    private BigDecimal idregistroingreso;
     @Column(name = "FECHA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    @JoinColumn(name = "ANALISTA_IDANALISTA", referencedColumnName = "IDANALISTA")
+    @JoinColumn(name = "IDANALISTA", referencedColumnName = "IDANALISTA")
     @ManyToOne(optional = false)
-    private Analista analistaIdanalista;
+    private Analista idanalista;
 
     public RegistroIngreso() {
     }
 
-    public RegistroIngreso(BigDecimal id) {
-        this.id = id;
+    public RegistroIngreso(BigDecimal idregistroingreso) {
+        this.idregistroingreso = idregistroingreso;
     }
 
-    public BigDecimal getId() {
-        return id;
+    public BigDecimal getIdregistroingreso() {
+        return idregistroingreso;
     }
 
-    public void setId(BigDecimal id) {
-        this.id = id;
+    public void setIdregistroingreso(BigDecimal idregistroingreso) {
+        this.idregistroingreso = idregistroingreso;
     }
 
     public Date getFecha() {
@@ -76,18 +78,18 @@ public class RegistroIngreso implements Serializable {
         this.fecha = fecha;
     }
 
-    public Analista getAnalistaIdanalista() {
-        return analistaIdanalista;
+    public Analista getIdanalista() {
+        return idanalista;
     }
 
-    public void setAnalistaIdanalista(Analista analistaIdanalista) {
-        this.analistaIdanalista = analistaIdanalista;
+    public void setIdanalista(Analista idanalista) {
+        this.idanalista = idanalista;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idregistroingreso != null ? idregistroingreso.hashCode() : 0);
         return hash;
     }
 
@@ -98,7 +100,7 @@ public class RegistroIngreso implements Serializable {
             return false;
         }
         RegistroIngreso other = (RegistroIngreso) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.idregistroingreso == null && other.idregistroingreso != null) || (this.idregistroingreso != null && !this.idregistroingreso.equals(other.idregistroingreso))) {
             return false;
         }
         return true;
@@ -106,7 +108,7 @@ public class RegistroIngreso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.seguroshorizonte.horifarmacia.entidades.RegistroIngreso[ id=" + id + " ]";
+        return "com.seguroshorizonte.horifarmacia.entidades.RegistroIngreso[ idregistroingreso=" + idregistroingreso + " ]";
     }
     
 }

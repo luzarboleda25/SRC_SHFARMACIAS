@@ -4,7 +4,7 @@
  */
 package com.seguroshorizonte.horifarmacia.sessionfacade;
 
-import com.seguroshorizonte.horifarmacia.entidades.ColaPreordenMedicamento;
+import com.seguroshorizonte.horifarmacia.entidades.ColaPreorden;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
  * @author Pangea
  */
 @Stateless
-public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMedicamento> {
+public class ColaPreordenFacade extends AbstractFacade<ColaPreorden> {
     @PersistenceContext(unitName = "HoriFarmaciaPU")
     private EntityManager em;
     
@@ -28,8 +28,8 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
         return em;
     }
 
-    public ColaPreordenMedicamentoFacade() {
-        super(ColaPreordenMedicamento.class);
+    public ColaPreordenFacade() {
+        super(ColaPreorden.class);
     }
     
     public Object obtenerTotalXFechaHoy(){
@@ -55,7 +55,7 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
         fecha2=cal2.getTime();
         
         Object resultCont;
-        Query query = em.createNamedQuery("ColaPreordenMedicamento.findByFechaHoy", ColaPreordenMedicamento.class);
+        Query query = em.createNamedQuery("ColaPreorden.findByFechaHoy", ColaPreorden.class);
         query.setParameter("fecha1",fecha);
         query.setParameter("fecha2",fecha2);
         resultCont = query.getSingleResult();
@@ -66,10 +66,10 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
       public int contarSHXidAnalista(String IdAnalista) {
        
         
-         Query query = em.createNamedQuery("ColaPreordenMedicamento.findAll", ColaPreordenMedicamento.class);
+         Query query = em.createNamedQuery("ColaPreorden.findAll", ColaPreorden.class);
         
 
-        List<ColaPreordenMedicamento> resultList = query.getResultList();
+        List<ColaPreorden> resultList = query.getResultList();
         
          String contador= resultList.toString();
          int con=Integer.parseInt(contador);
@@ -80,7 +80,7 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
      public BigDecimal primeroCola(){
         
          
-           Query query = em.createNamedQuery("ColaPreordenMedicamento.findPrimeroCola", ColaPreordenMedicamento.class);
+           Query query = em.createNamedQuery("ColaPreorden.findPrimeroCola", ColaPreorden.class);
           Object resultList = query.getSingleResult();
          String Auxi= resultList.toString();
         BigDecimal aux = new BigDecimal(Auxi);
@@ -89,24 +89,24 @@ public class ColaPreordenMedicamentoFacade extends AbstractFacade<ColaPreordenMe
      }
      
      
-     public ColaPreordenMedicamento buscarColaXcodCli(String codCli){
+     public ColaPreorden buscarColaXcodCli(String codCli){
         
          
-           Query query = em.createNamedQuery("ColaPreordenMedicamento.findByCodCli", ColaPreordenMedicamento.class);
+           Query query = em.createNamedQuery("ColaPreorden.findByCodCli", ColaPreorden.class);
            query.setParameter("codCli",codCli);
 
-       ColaPreordenMedicamento resultList = (ColaPreordenMedicamento) query.getSingleResult();
+       ColaPreorden resultList = (ColaPreorden) query.getSingleResult();
          return resultList;
          
      }
   
-      public ColaPreordenMedicamento buscarColaXidPreOrden(String idPreOrden){
+      public ColaPreorden buscarColaXidPreOrden(String idPreOrden){
         
          
-           Query query = em.createNamedQuery("ColaPreordenMedicamento.findByColaIdPreOrden", ColaPreordenMedicamento.class);
+           Query query = em.createNamedQuery("ColaPreorden.findByColaIdPreOrden", ColaPreorden.class);
            query.setParameter(":idpreorden",new BigDecimal(idPreOrden));
 
-       ColaPreordenMedicamento resultList = (ColaPreordenMedicamento) query.getSingleResult();
+       ColaPreorden resultList = (ColaPreorden) query.getSingleResult();
          return resultList;
          
      }

@@ -7,7 +7,7 @@ package com.seguroshorizonte.horifarmacia.sessionfacade;
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
-import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenAnalista;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +22,7 @@ import javax.persistence.Query;
  * @author Pangea
  */
 @Stateless
-public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMedicamentoAnalista> {
+public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
 
     @PersistenceContext(unitName = "HoriFarmaciaPU")
     private EntityManager em;
@@ -32,11 +32,11 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
         return em;
     }
 
-    public PreordenMedicamentoAnalistaFacade() {
-        super(PreordenMedicamentoAnalista.class);
+    public PreordenAnalistaFacade() {
+        super(PreordenAnalista.class);
     }
 
-    public List<PreordenMedicamentoAnalista> listarPreOrdenProcesadasXidAnalista(String IdAnalista) {
+    public List<PreordenAnalista> listarPreOrdenProcesadasXidAnalista(String IdAnalista) {
 
         Analista data = new Analista();
         data.setIdanalista(new BigDecimal(IdAnalista));
@@ -61,12 +61,12 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
         fecha2 = cal2.getTime();
         Query query;
-        query = em.createNamedQuery("PreordenMedicamentoAnalista.findByIdAnalista", Preorden.class);
+        query = em.createNamedQuery("PreordenAnalista.findByIdAnalista", Preorden.class);
         query.setParameter("analistaIdanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
 
-        List<PreordenMedicamentoAnalista> resultList = query.getResultList();
+        List<PreordenAnalista> resultList = query.getResultList();
 
         return resultList;
 
@@ -96,7 +96,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
         fecha2 = cal2.getTime();
         Query query;
-        query = em.createNamedQuery("PreordenMedicamentoAnalista.ContarSHXidAnalista", Preorden.class);
+        query = em.createNamedQuery("PreordenAnalista.ContarSHXidAnalista", Preorden.class);
         query.setParameter("analistaIdanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
@@ -116,7 +116,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
         data.setIdanalista(new BigDecimal(IdAnalista));
         
         Query query;
-        query = em.createNamedQuery("PreordenMedicamentoAnalista.ContarSHXidAnalista", Preorden.class);
+        query = em.createNamedQuery("PreordenAnalista.ContarSHXidAnalista", Preorden.class);
         query.setParameter("analistaIdanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
@@ -125,6 +125,11 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
         String contador = resultList.toString();
         int con = Integer.parseInt(contador);
+        
+        if(contador==null){
+            
+            con=0;
+        }
         return con;
 
     }
@@ -132,7 +137,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
     
     
     
-    public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(String estado) {
+    public List<PreordenAnalista> listaSolicitudesProcesadasXFecha(String estado) {
 
         Date fecha = new Date();
         Date fecha2;
@@ -154,8 +159,8 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
         fecha2 = cal2.getTime();
         Query query;
-        List<PreordenMedicamentoAnalista> resultList;
-        query = em.createNamedQuery("PreordenMedicamentoAnalista.findByProcesadaFechaHoy", Preorden.class);
+        List<PreordenAnalista> resultList;
+        query = em.createNamedQuery("PreordenAnalista.findByProcesadaFechaHoy", Preorden.class);
         query.setParameter("estado", estado);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
@@ -187,7 +192,7 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
         fecha2 = cal2.getTime();
         Query query;
         Object resultCont;
-        query = em.createNamedQuery("PreordenMedicamentoAnalista.findByContadorProcesadas", Preorden.class);
+        query = em.createNamedQuery("PreordenAnalista.findByContadorProcesadas", Preorden.class);
         query.setParameter("estado", estado);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
@@ -196,10 +201,10 @@ public class PreordenMedicamentoAnalistaFacade extends AbstractFacade<PreordenMe
 
     }
 
-    public PreordenMedicamentoAnalista obtenerPreordenMedicamentoAnalistaXidPreorden(Preorden idPreorden) {
-        Query query = em.createNamedQuery("PreordenMedicamentoAnalista.findByIdpreMedAna", PreordenMedicamentoAnalista.class);
+    public PreordenAnalista obtenerPreordenAnalistaXidPreorden(Preorden idPreorden) {
+        Query query = em.createNamedQuery("PreordenAnalista.findByIdpreMedAna", PreordenAnalista.class);
         query.setParameter("idpreMedAna", idPreorden);
-        PreordenMedicamentoAnalista Resultado = (PreordenMedicamentoAnalista) query.getSingleResult();
+        PreordenAnalista Resultado = (PreordenAnalista) query.getSingleResult();
         return Resultado;
     }
 }

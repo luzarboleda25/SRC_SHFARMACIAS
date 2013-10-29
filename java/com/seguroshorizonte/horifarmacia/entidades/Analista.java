@@ -39,8 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Analista.findByUsuario", query = "SELECT a FROM Analista a WHERE a.usuario = :usuario"),
     @NamedQuery(name = "Analista.findByContrasena", query = "SELECT a FROM Analista a WHERE a.contrasena = :contrasena"),
     @NamedQuery(name = "Analista.findByUsuarioYContrasena", query = "SELECT a FROM Analista a WHERE a.usuario = :usuario AND a.contrasena = :contrasena"),
-    @NamedQuery(name = "Analista.findByEstado", query = "SELECT a FROM Analista a WHERE a.estado = :estado"),
-    @NamedQuery(name = "Analista.findByEsta", query = "SELECT COUNT(a.idanalista) FROM Analista a WHERE a.estado = :estado")})
+    @NamedQuery(name = "Analista.findByStatus", query = "SELECT a FROM Analista a WHERE a.status = :status"),
+    @NamedQuery(name = "Analista.findByEsta", query = "SELECT COUNT(a.idanalista) FROM Analista a WHERE a.status = :status")})
 public class Analista implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -60,23 +60,26 @@ public class Analista implements Serializable {
     @Size(max = 50)
     @Column(name = "CORREO")
     private String correo;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "USUARIO")
     private String usuario;
     @Size(max = 50)
     @Column(name = "CONTRASENA")
     private String contrasena;
-    @Column(name = "ESTADO")
-    private Short estado;
-    @JoinColumn(name = "ROL_IDROL", referencedColumnName = "IDROL")
+    @Size(max = 1)
+    @Column(name = "STATUS")
+    private String status;
+    @JoinColumn(name = "IDROL", referencedColumnName = "IDROL")
     @ManyToOne(optional = false)
-    private Rol rolIdrol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analistaIdanalista")
-    private Collection<PreordenMedicamentoAnalista> preordenMedicamentoAnalistaCollection;
-    @OneToMany(mappedBy = "idauditor")
-    private Collection<PreordenMedicamentoAnalista> preordenMedicamentoAnalistaCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analistaIdanalista")
+    private Rol idrol;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idanalista")
     private Collection<RegistroIngreso> registroIngresoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idanalista")
+    private Collection<PreordenAnalista> preordenAnalistaCollection;
+    @OneToMany(mappedBy = "idauditor")
+    private Collection<PreordenAnalista> preordenAnalistaCollection1;
 
     public Analista() {
     }
@@ -85,9 +88,10 @@ public class Analista implements Serializable {
         this.idanalista = idanalista;
     }
 
-    public Analista(BigDecimal idanalista, String nombre) {
+    public Analista(BigDecimal idanalista, String nombre, String usuario) {
         this.idanalista = idanalista;
         this.nombre = nombre;
+        this.usuario = usuario;
     }
 
     public BigDecimal getIdanalista() {
@@ -138,38 +142,20 @@ public class Analista implements Serializable {
         this.contrasena = contrasena;
     }
 
-    public Short getEstado() {
-        return estado;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEstado(Short estado) {
-        this.estado = estado;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Rol getRolIdrol() {
-        return rolIdrol;
+    public Rol getIdrol() {
+        return idrol;
     }
 
-    public void setRolIdrol(Rol rolIdrol) {
-        this.rolIdrol = rolIdrol;
-    }
-
-    @XmlTransient
-    public Collection<PreordenMedicamentoAnalista> getPreordenMedicamentoAnalistaCollection() {
-        return preordenMedicamentoAnalistaCollection;
-    }
-
-    public void setPreordenMedicamentoAnalistaCollection(Collection<PreordenMedicamentoAnalista> preordenMedicamentoAnalistaCollection) {
-        this.preordenMedicamentoAnalistaCollection = preordenMedicamentoAnalistaCollection;
-    }
-
-    @XmlTransient
-    public Collection<PreordenMedicamentoAnalista> getPreordenMedicamentoAnalistaCollection1() {
-        return preordenMedicamentoAnalistaCollection1;
-    }
-
-    public void setPreordenMedicamentoAnalistaCollection1(Collection<PreordenMedicamentoAnalista> preordenMedicamentoAnalistaCollection1) {
-        this.preordenMedicamentoAnalistaCollection1 = preordenMedicamentoAnalistaCollection1;
+    public void setIdrol(Rol idrol) {
+        this.idrol = idrol;
     }
 
     @XmlTransient
@@ -179,6 +165,24 @@ public class Analista implements Serializable {
 
     public void setRegistroIngresoCollection(Collection<RegistroIngreso> registroIngresoCollection) {
         this.registroIngresoCollection = registroIngresoCollection;
+    }
+
+    @XmlTransient
+    public Collection<PreordenAnalista> getPreordenAnalistaCollection() {
+        return preordenAnalistaCollection;
+    }
+
+    public void setPreordenAnalistaCollection(Collection<PreordenAnalista> preordenAnalistaCollection) {
+        this.preordenAnalistaCollection = preordenAnalistaCollection;
+    }
+
+    @XmlTransient
+    public Collection<PreordenAnalista> getPreordenAnalistaCollection1() {
+        return preordenAnalistaCollection1;
+    }
+
+    public void setPreordenAnalistaCollection1(Collection<PreordenAnalista> preordenAnalistaCollection1) {
+        this.preordenAnalistaCollection1 = preordenAnalistaCollection1;
     }
 
     @Override

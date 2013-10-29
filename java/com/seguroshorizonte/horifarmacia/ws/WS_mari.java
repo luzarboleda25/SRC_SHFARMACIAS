@@ -7,7 +7,7 @@ package com.seguroshorizonte.horifarmacia.ws;
 import com.seguroshorizonte.horifarmacia.entidades.Analista;
 import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento;
-import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenAnalista;
 import com.seguroshorizonte.horifarmacia.entidades.RegistroIngreso;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -31,7 +31,7 @@ public class WS_mari {
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
     @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade PreMedAnaServices;
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade PreMedAnaServices;
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.RegistroIngresoFacade registroIngresoServices;
 
@@ -48,7 +48,7 @@ public class WS_mari {
     public int ingresarAuditoria(@WebParam(name = "PreMedAna") Preorden Preordenn, Analista Auditor, String Observacion) {
         int Resultado = 0;
         try {
-            PreordenMedicamentoAnalista PreordMedAna = PreMedAnaServices.obtenerPreordenMedicamentoAnalistaXidPreorden(Preordenn);
+            PreordenAnalista PreordMedAna = PreMedAnaServices.obtenerPreordenAnalistaXidPreorden(Preordenn);
             PreordMedAna.setIdauditor(Auditor);
             PreordMedAna.setObservacionauditor(Observacion);
             PreMedAnaServices.edit(PreordMedAna);

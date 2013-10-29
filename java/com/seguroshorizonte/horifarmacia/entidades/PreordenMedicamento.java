@@ -31,11 +31,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamento.findAll", query = "SELECT p FROM PreordenMedicamento p"),
     @NamedQuery(name = "PreordenMedicamento.findByIdpreordenmedicamento", query = "SELECT p FROM PreordenMedicamento p WHERE p.idpreordenmedicamento = :idpreordenmedicamento"),
     @NamedQuery(name = "PreordenMedicamento.findByDuracion", query = "SELECT p FROM PreordenMedicamento p WHERE p.duracion = :duracion"),
-    @NamedQuery(name = "PreordenMedicamento.findByIdpreorden", query = "SELECT p FROM PreordenMedicamento p WHERE p.idpreorden = :idpreorden"),
     @NamedQuery(name = "PreordenMedicamento.findByCantidad", query = "SELECT p FROM PreordenMedicamento p WHERE p.cantidad = :cantidad"),
-    @NamedQuery(name = "PreordenMedicamento.findByEntregado", query = "SELECT p FROM PreordenMedicamento p WHERE p.entregado = :entregado")})
+    @NamedQuery(name = "PreordenMedicamento.findByEntregado", query = "SELECT p FROM PreordenMedicamento p WHERE p.entregado = :entregado"),
+    @NamedQuery(name = "PreordenMedicamento.findByStatus", query = "SELECT p FROM PreordenMedicamento p WHERE p.status = :status"),
+    @NamedQuery(name = "PreordenMedicamento.findByMotivo", query = "SELECT p FROM PreordenMedicamento p WHERE p.motivo = :motivo")})
 public class PreordenMedicamento implements Serializable {
-
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -56,6 +56,12 @@ public class PreordenMedicamento implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "ENTREGADO")
     private String entregado;
+    @Size(max = 1)
+    @Column(name = "STATUS")
+    private String status;
+    @Size(max = 200)
+    @Column(name = "MOTIVO")
+    private String motivo;
     @JoinColumn(name = "IDPREORDEN", referencedColumnName = "IDPREORDEN")
     @ManyToOne(optional = false)
     private Preorden idpreorden;
@@ -112,6 +118,22 @@ public class PreordenMedicamento implements Serializable {
         this.entregado = entregado;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
     public Preorden getIdpreorden() {
         return idpreorden;
     }
@@ -160,4 +182,5 @@ public class PreordenMedicamento implements Serializable {
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento[ idpreordenmedicamento=" + idpreordenmedicamento + " ]";
     }
+    
 }

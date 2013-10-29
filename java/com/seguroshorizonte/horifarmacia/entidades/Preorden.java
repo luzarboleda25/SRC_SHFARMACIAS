@@ -7,6 +7,7 @@ package com.seguroshorizonte.horifarmacia.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -62,8 +63,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Preorden.findByReconsiderar", query = "SELECT p FROM Preorden p WHERE p.reconsiderar = :reconsiderar"),
     @NamedQuery(name = "Preorden.findByReconsiderarObservaciones", query = "SELECT p FROM Preorden p WHERE p.reconsiderarObservaciones = :reconsiderarObservaciones")})
 public class Preorden implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpreorden")
+    private Collection<ColaPreorden> colaPreordenCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "preorden")
-    private PreordenMedicamentoAnalista preordenMedicamentoAnalista;
+    private PreordenAnalista preordenAnalista;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "preorden")
+   
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -422,12 +427,23 @@ public class Preorden implements Serializable {
         return "com.seguroshorizonte.horifarmacia.entidades.Preorden[ idpreorden=" + idpreorden + " ]";
     }
 
-    public PreordenMedicamentoAnalista getPreordenMedicamentoAnalista() {
-        return preordenMedicamentoAnalista;
+   
+
+    @XmlTransient
+    public Collection<ColaPreorden> getColaPreordenCollection() {
+        return colaPreordenCollection;
     }
 
-    public void setPreordenMedicamentoAnalista(PreordenMedicamentoAnalista preordenMedicamentoAnalista) {
-        this.preordenMedicamentoAnalista = preordenMedicamentoAnalista;
+    public void setColaPreordenCollection(Collection<ColaPreorden> colaPreordenCollection) {
+        this.colaPreordenCollection = colaPreordenCollection;
+    }
+
+    public PreordenAnalista getPreordenAnalista() {
+        return preordenAnalista;
+    }
+
+    public void setPreordenAnalista(PreordenAnalista preordenAnalista) {
+        this.preordenAnalista = preordenAnalista;
     }
     
 }

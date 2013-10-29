@@ -45,22 +45,24 @@ public class RegistroIngresoFacade extends AbstractFacade<RegistroIngreso> {
         query.setParameter("analistaIdanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
-
-      
+        String contador;
+ 
         Object resultList = query.getSingleResult();
-
-        String contador = resultList.toString();
+        contador = resultList.toString();
+       
         int con = Integer.parseInt(contador);
         
         if(con==0){
             Date f=new Date();
-//            
+    
             if(fecha.getDay()==f.getDay()){
                 con=1;
-            }else{
-                con=0;
             }
             
+        }
+        
+        if(contador==null){
+            con=0;
         }
         return con;
         

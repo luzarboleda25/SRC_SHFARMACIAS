@@ -4,7 +4,7 @@
  */
 package com.seguroshorizonte.horifarmacia.ws;
 
-import com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamentoAnalista;
+import com.seguroshorizonte.horifarmacia.entidades.PreordenAnalista;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -19,13 +19,13 @@ import javax.jws.WebParam;
 public class WS_Niuska {
     
     @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenMedicamentoFacade colaServices;
+    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenFacade colaServices;
     
     @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
     
     @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenMedicamentoAnalistaFacade poMedicamentoAnalistaServices;
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade poMedicamentoAnalistaServices;
    
  
     /**
@@ -97,10 +97,10 @@ public class WS_Niuska {
      * @return
      */
     @WebMethod(operationName = "listaSolicitudesProcesadasXFecha")
-    public List<PreordenMedicamentoAnalista> listaSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
+    public List<PreordenAnalista> listaSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
 
         try {
-            List<PreordenMedicamentoAnalista> listaPMA;
+            List<PreordenAnalista> listaPMA;
             
             listaPMA=poMedicamentoAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
             return listaPMA;
