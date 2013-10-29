@@ -31,9 +31,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenMedicamento.findAll", query = "SELECT p FROM PreordenMedicamento p"),
     @NamedQuery(name = "PreordenMedicamento.findByIdpreordenmedicamento", query = "SELECT p FROM PreordenMedicamento p WHERE p.idpreordenmedicamento = :idpreordenmedicamento"),
     @NamedQuery(name = "PreordenMedicamento.findByDuracion", query = "SELECT p FROM PreordenMedicamento p WHERE p.duracion = :duracion"),
+    @NamedQuery(name = "PreordenMedicamento.findByIdpreorden", query = "SELECT p FROM PreordenMedicamento p WHERE p.idpreorden = :idpreorden"),
     @NamedQuery(name = "PreordenMedicamento.findByCantidad", query = "SELECT p FROM PreordenMedicamento p WHERE p.cantidad = :cantidad"),
     @NamedQuery(name = "PreordenMedicamento.findByEntregado", query = "SELECT p FROM PreordenMedicamento p WHERE p.entregado = :entregado")})
 public class PreordenMedicamento implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -158,5 +160,4 @@ public class PreordenMedicamento implements Serializable {
     public String toString() {
         return "com.seguroshorizonte.horifarmacia.entidades.PreordenMedicamento[ idpreordenmedicamento=" + idpreordenmedicamento + " ]";
     }
-    
 }
