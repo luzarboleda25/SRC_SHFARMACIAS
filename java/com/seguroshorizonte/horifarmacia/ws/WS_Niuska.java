@@ -25,7 +25,7 @@ public class WS_Niuska {
     private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
     
     @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade poMedicamentoAnalistaServices;
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade poAnalistaServices;
    
  
     /**
@@ -75,13 +75,11 @@ public class WS_Niuska {
     public int obtenerTotalOperadoresConectadosXEstado(@WebParam(name = "estado") String estado) {
     
         try{
-            int operadoresConectados, estadoint;
+            int operadoresConectados;
             String result;
             Object resultado;
-            
-            estadoint = Integer.parseInt(estado);
 
-            resultado=analistaServices.obtenerTotaOperadoresConectadosXEstado(estadoint);
+            resultado=analistaServices.obtenerTotaOperadoresConectadosXEstado(estado);
             result=resultado.toString();
             operadoresConectados= Integer.parseInt(result);
             return operadoresConectados;
@@ -102,7 +100,7 @@ public class WS_Niuska {
         try {
             List<PreordenAnalista> listaPMA;
             
-            listaPMA=poMedicamentoAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
+            listaPMA=poAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
             return listaPMA;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
@@ -123,7 +121,7 @@ public class WS_Niuska {
             String result;
             Object resultado;
             
-            resultado=poMedicamentoAnalistaServices.obtenerSolicitudesProcesadasXFecha(estado);
+            resultado=poAnalistaServices.obtenerSolicitudesProcesadasXFecha(estado);
             result=resultado.toString();
             contPMA=Integer.parseInt(result);
             return contPMA;
@@ -143,7 +141,7 @@ public class WS_Niuska {
     public int contarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
 
         try {
-            int Cont = poMedicamentoAnalistaServices.contarSHXidAnalista(idAnalista);
+            int Cont = poAnalistaServices.contarSHXidAnalista(idAnalista);
             return Cont;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de PreOrden");
