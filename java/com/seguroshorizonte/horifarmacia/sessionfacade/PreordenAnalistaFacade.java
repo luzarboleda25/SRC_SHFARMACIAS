@@ -62,7 +62,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
         fecha2 = cal2.getTime();
         Query query;
         query = em.createNamedQuery("PreordenAnalista.findByIdAnalista", Preorden.class);
-        query.setParameter("analistaIdanalista", data);
+        query.setParameter("idanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
 
@@ -97,7 +97,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
         fecha2 = cal2.getTime();
         Query query;
         query = em.createNamedQuery("PreordenAnalista.ContarSHXidAnalista", Preorden.class);
-        query.setParameter("analistaIdanalista", data);
+        query.setParameter("idanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
 
@@ -117,7 +117,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
         
         Query query;
         query = em.createNamedQuery("PreordenAnalista.ContarSHXidAnalista", Preorden.class);
-        query.setParameter("analistaIdanalista", data);
+        query.setParameter("idanalista", data);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
 
@@ -137,7 +137,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
     
     
     
-    public List<PreordenAnalista> listaSolicitudesProcesadasXFecha(String estado) {
+    public List<PreordenAnalista> listaSolicitudesProcesadasXFecha(String status) {
 
         Date fecha = new Date();
         Date fecha2;
@@ -161,7 +161,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
         Query query;
         List<PreordenAnalista> resultList;
         query = em.createNamedQuery("PreordenAnalista.findByProcesadaFechaHoy", Preorden.class);
-        query.setParameter("estado", estado);
+        query.setParameter("status", status);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
         resultList = query.getResultList();
@@ -169,7 +169,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
 
     }
 
-    public Object obtenerSolicitudesProcesadasXFecha(String estado) {
+    public Object obtenerSolicitudesProcesadasXFecha(String status) {
 
         Date fecha = new Date();
         Date fecha2;
@@ -193,7 +193,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
         Query query;
         Object resultCont;
         query = em.createNamedQuery("PreordenAnalista.findByContadorProcesadas", Preorden.class);
-        query.setParameter("estado", estado);
+        query.setParameter("status", status);
         query.setParameter("fecha1", fecha);
         query.setParameter("fecha2", fecha2);
         resultCont = query.getSingleResult();
