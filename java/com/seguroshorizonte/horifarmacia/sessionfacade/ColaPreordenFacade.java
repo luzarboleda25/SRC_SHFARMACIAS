@@ -82,8 +82,8 @@ public class ColaPreordenFacade extends AbstractFacade<ColaPreorden> {
          
            Query query = em.createNamedQuery("ColaPreorden.findPrimeroCola", ColaPreorden.class);
           Object resultList = query.getSingleResult();
-         String Auxi= resultList.toString();
-        BigDecimal aux = new BigDecimal(Auxi);
+          String Auxi= resultList.toString();
+          BigDecimal aux = new BigDecimal(Auxi);
          return aux;
          
      }
