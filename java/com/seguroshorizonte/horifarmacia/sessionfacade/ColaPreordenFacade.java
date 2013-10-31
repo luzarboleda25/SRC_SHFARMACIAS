@@ -5,6 +5,7 @@
 package com.seguroshorizonte.horifarmacia.sessionfacade;
 
 import com.seguroshorizonte.horifarmacia.entidades.ColaPreorden;
+import com.seguroshorizonte.horifarmacia.entidades.Preorden;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,22 +90,22 @@ public class ColaPreordenFacade extends AbstractFacade<ColaPreorden> {
      }
      
      
-     public ColaPreorden buscarColaXcodCli(String codCli){
+     public List<ColaPreorden> buscarColaXcodCli(String codCli){
         
-         
+           
            Query query = em.createNamedQuery("ColaPreorden.findByCodCli", ColaPreorden.class);
-           query.setParameter("codCli",codCli);
+           query.setParameter("codcli",codCli);
 
-       ColaPreorden resultList = (ColaPreorden) query.getSingleResult();
+       List<ColaPreorden> resultList =  query.getResultList();
          return resultList;
          
      }
   
       public ColaPreorden buscarColaXidPreOrden(String idPreOrden){
-        
-         
+           Preorden Po=new Preorden ();
+           Po.setIdpreorden(new BigDecimal(idPreOrden));       
            Query query = em.createNamedQuery("ColaPreorden.findByColaIdPreOrden", ColaPreorden.class);
-           query.setParameter(":idpreorden",new BigDecimal(idPreOrden));
+           query.setParameter("idpreorden",Po);
 
        ColaPreorden resultList = (ColaPreorden) query.getSingleResult();
          return resultList;

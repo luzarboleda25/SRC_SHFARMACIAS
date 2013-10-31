@@ -23,22 +23,19 @@ import javax.jws.WebParam;
  */
 @WebService(serviceName = "ColasWS")
 public class ColasWS {
-    
-    @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenFacade colaPoServices;
-    
-    @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
-    
-    @EJB
-    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade poAnalistaServices;
 
     @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.ColaPreordenFacade colaPoServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.AnalistaFacade analistaServices;
+    @EJB
+    private com.seguroshorizonte.horifarmacia.sessionfacade.PreordenAnalistaFacade poAnalistaServices;
+    @EJB
     private com.seguroshorizonte.horifarmacia.sessionfacade.RegistroIngresoFacade RegistroIngresoServices;
-    
-    
-     /**
+
+    /**
      * Enlista las PreOrdenes por el Id del analista dado
+     *
      * @param idAnalista
      * @return una lista de objetos de PreordenAnalista
      */
@@ -48,195 +45,244 @@ public class ColasWS {
         try {
             List<PreordenAnalista> listaPMA;
             listaPMA = poAnalistaServices.listarPreOrdenProcesadasXidAnalista(idAnalista);
-           int j=0;
-            while(listaPMA.size()>j){
+            int j = 0;
+            while (listaPMA.size() > j) {
                 listaPMA.get(j).getPreorden().setPreordenAnalista(null);
                 listaPMA.get(j).getPreorden().setPreordenMedicamentoList(null);
                 j++;
             }
-            
-            
+
+
             return listaPMA;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de PreOrden");
             return null;
         }
     }
-    
-     
-       /**
+
+    /**
+     * Extrae el primero de la cola y lo asigna al analista asiganado
      *
      * @param idAnalista
-     * @return
+     * @return 1 cuando se hizo la extracción y se asigno y 0 cuando hubo un
+     * error
      */
     @WebMethod(operationName = "extraerDeLaColaXidAnalista")
     public int extraerDeLaColaXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
-        
-           try{
-               
-           BigDecimal primeroC = colaPoServices.primeroCola();
-           ColaPreorden primero = colaPoServices.find(primeroC);
-           Analista analista = analistaServices.find(new BigDecimal(idAnalista));
-           PreordenAnalista PMAnalista=new PreordenAnalista();
-           
-           PMAnalista.setFecha(new Date());
-           //
-           PMAnalista.setIdanalista(analista);
-           PMAnalista.setStatus("0");
-           colaPoServices.remove(primero);
-           poAnalistaServices.create(PMAnalista);
-           
-            }catch(Exception ex){
-                   return 0;
-            }
-           
-        return 1;
+
+        try {
+
+            BigDecimal primeroC = colaPoServices.primeroCola();
+            ColaPreorden primero = colaPoServices.find(primeroC);
+            Analista analista = analistaServices.find(new BigDecimal(idAnalista));
+            PreordenAnalista PMAnalista = new PreordenAnalista();
+
+            PMAnalista.setFecha(new Date());
+            //
+            PMAnalista.setIdanalista(analista);
+            PMAnalista.setStatus("0");
+            colaPoServices.remove(primero);
+            poAnalistaServices.create(PMAnalista);
+
+        } catch (Exception ex) {
+            return 0;
         }
-       /**
+
+        return 1;
+    }
+
+    /**
+     * coloca de primero en la cola todas las preordenes que esten asociadas al
+     * codigo del cliente
      *
      * @param codCli
-     * @return
+     * @return 1 cuando se hizo la operacion y 0 cuando hubo un error
      */
-    
-    
-    @WebMethod(operationName = "extraerDeLaColaXcodCli")
-       public int extraerDeLaColaXcodCli(@WebParam(name = "codCli")String codCli) {
-        
-           ColaPreorden buscar = colaPoServices.buscarColaXcodCli(codCli);
-           colaPoServices.remove(buscar);
-         
-           
-           
-          return 0;
+    @WebMethod(operationName = "priorizarColaXcodCli")
+    public int priorizarDeLaColaXcodCli(@WebParam(name = "codCli") String codCli) {
 
 
+        try {
+            List<ColaPreorden> buscar = colaPoServices.buscarColaXcodCli(codCli);
+            BigDecimal primeroC = colaPoServices.primeroCola();
+            int idmin = primeroC.intValue() - (buscar.size());
+
+
+            if (idmin != 0 && buscar.size() > 0) {
+                idmin = primeroC.intValue() - (buscar.size());
+                for (int j = 0; j < buscar.size(); j++) {
+                    colaPoServices.remove(buscar.get(j));
+                    buscar.get(j).setIdcolapreorden(new BigDecimal(idmin));
+                    colaPoServices.edit(buscar.get(j));
+                    idmin++;
+                }
+
+            } else {
+                return 0;
+            }
+
+
+        } catch (Exception ex) {
+            return 0;
         }
-       /**
+
+        return 1;
+
+
+
+    }
+
+    /**
+     * coloca de primero en la cola todas las preorden que esten asociadas al
+     * idPreOrden
      *
      * @param idPreOrden
      * @return
+     * @return 1 cuando se hizo la extracción y se asigno y 0 cuando hubo un
+     * error
      */
-    @WebMethod(operationName = "extraerDeLaColaXidPreOrden")
-        public int extraerDeLaColaXidPreOrden(@WebParam(name = "idPreOrden")String idPreOrden) {
-        
-           ColaPreorden buscar= colaPoServices.buscarColaXidPreOrden(idPreOrden);
-           colaPoServices.remove(buscar);
-           
-           
-          return 0;
+    @WebMethod(operationName = "priorizarColaXidPreOrden")
+    public int priorizarDeLaColaXidPreOrden(@WebParam(name = "idPreOrden") String idPreOrden) {
+        try {
+            ColaPreorden buscar = colaPoServices.buscarColaXidPreOrden(idPreOrden);
+            BigDecimal primeroC = colaPoServices.primeroCola();
+            int idmin = primeroC.intValue() - 1;
+            if (idmin != 0) {
+                colaPoServices.remove(buscar);
+                buscar.setIdcolapreorden(new BigDecimal(idmin));
+                colaPoServices.edit(buscar);
+            } else {
+                return 0;
+            }
 
 
+        } catch (Exception ex) {
+            return 0;
         }
-        
-        /**
+
+        return 1;
+
+
+    }
+
+    /**
+     * Obtiene el promedio de las solicitudes procesadas de la semana del
+     * analista dado
      *
      * @param idAnalista
-     * @return
+     * @return un numero entero del promedio de solicitudes procesadas
      */
     @WebMethod(operationName = "promedioSolicitudesXidAnalista")
-        public int promedioSolicitudesXidAnalista(@WebParam(name = "idAnalista")String idAnalista){
-       
-        
-        GregorianCalendar cal = new GregorianCalendar();
-        Analista data = new Analista();
-        data.setIdanalista(new BigDecimal(idAnalista));
-        
-	int  diaSemana=cal.get(Calendar.DAY_OF_WEEK);     
-        diaSemana=diaSemana-2;
-        Date fecha = new Date();
-        System.out.print(fecha);
-        Date fecha2;
-        cal.setTime(fecha);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        System.out.print(dia);
-        int dia2=dia+1;
-        cal.set(Calendar.DAY_OF_MONTH, dia2);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        fecha2 = cal.getTime();
-        int lunes=dia-diaSemana;
-        cal.set(Calendar.DAY_OF_MONTH, lunes);
-        fecha = cal.getTime();
-            
-        int buscarDTS = RegistroIngresoServices.diasTrajadosXSemana(idAnalista,fecha,fecha2);
-        int buscarSS = poAnalistaServices.contarSHXidAnalistaXS(idAnalista, fecha, fecha2);
-        int promedio;
-        
-        if(buscarDTS==0 || buscarSS==0){
-            promedio=0;
-        }else {
-            promedio= buscarSS/buscarDTS;
-        }
-            
+    public int promedioSolicitudesXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
+
+        try {
+            GregorianCalendar cal = new GregorianCalendar();
+            Analista data = new Analista();
+            data.setIdanalista(new BigDecimal(idAnalista));
+
+            int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+            diaSemana = diaSemana - 2;
+            Date fecha = new Date();
+            System.out.print(fecha);
+            Date fecha2;
+            cal.setTime(fecha);
+            int dia = cal.get(Calendar.DAY_OF_MONTH);
+            System.out.print(dia);
+            int dia2 = dia + 1;
+            cal.set(Calendar.DAY_OF_MONTH, dia2);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            fecha2 = cal.getTime();
+            int lunes = dia - diaSemana;
+            cal.set(Calendar.DAY_OF_MONTH, lunes);
+            fecha = cal.getTime();
+
+            int buscarDTS = RegistroIngresoServices.diasTrajadosXSemana(idAnalista, fecha, fecha2);
+            int buscarSS = poAnalistaServices.contarSHXidAnalistaXS(idAnalista, fecha, fecha2);
+            int promedio;
+
+            if (buscarDTS == 0 || buscarSS == 0) {
+                promedio = 0;
+            } else {
+                promedio = buscarSS / buscarDTS;
+            }
+
             return promedio;
+
+        } catch (Exception ex) {
+            return 0;
         }
-    
-    
+
+
+    }
+
     /**
      * Método que obtiene el total de la cola
-     * @return 
+     *
+     * @return
      */
     @WebMethod(operationName = "obtenerColaPreOrden")
     public int obtenerColaPreOrden() {
-        try{
+        try {
             return colaPoServices.count();
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Total de Solicitudes por Procesar");
             return 0;
         }
     }
-    
-    
+
     /**
      * Método que obtiene el total de la cola el día de hoy
+     *
      * @return
      */
     @WebMethod(operationName = "obtenerTotalXFechaHoy")
     public int obtenerTotalXFechaHoy() {
-        
-        try{
-            int colaFecha=0;
+
+        try {
+            int colaFecha = 0;
             String result;
             Object resultado;
-            
-            resultado=colaPoServices.obtenerTotalXFechaHoy();
-            result=resultado.toString();
-            colaFecha=Integer.parseInt(result);
+
+            resultado = colaPoServices.obtenerTotalXFechaHoy();
+            result = resultado.toString();
+            colaFecha = Integer.parseInt(result);
             return colaFecha;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Ingresadas en la Cola Hoy");
             return 0;
         }
     }
-    
-    
+
     /**
      * Método que obtiene el total de los operadores conectados con estado "1"
+     *
      * @param estado
      * @return
      */
     @WebMethod(operationName = "obtenerTotalOperadoresConectadosXEstado")
     public int obtenerTotalOperadoresConectadosXEstado(@WebParam(name = "estado") String estado) {
-    
-        try{
+
+        try {
             int operadoresConectados;
             String result;
             Object resultado;
 
-            resultado=analistaServices.obtenerTotaOperadoresConectadosXEstado(estado);
-            result=resultado.toString();
-            operadoresConectados= Integer.parseInt(result);
+            resultado = analistaServices.obtenerTotaOperadoresConectadosXEstado(estado);
+            result = resultado.toString();
+            operadoresConectados = Integer.parseInt(result);
             return operadoresConectados;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Operadores Conectados");
             return 0;
         }
     }
-    
+
     /**
      * Método que obtiene la lista de las solicitudes procesadas el día de hoy
+     *
      * @param estado
      * @return
      */
@@ -245,17 +291,19 @@ public class ColasWS {
 
         try {
             List<PreordenAnalista> listaPMA;
-            
-            listaPMA=poAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
+
+            listaPMA = poAnalistaServices.listaSolicitudesProcesadasXFecha(estado);
             return listaPMA;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
             return null;
         }
     }
-    
+
     /**
-     * Método que obtiene el total de solicitudes procesadas el día de hoy por analista
+     * Método que obtiene el total de solicitudes procesadas el día de hoy por
+     * analista
+     *
      * @param estado
      * @return
      */
@@ -266,20 +314,20 @@ public class ColasWS {
             int contPMA;
             String result;
             Object resultado;
-            
-            resultado=poAnalistaServices.obtenerSolicitudesProcesadasXFecha(estado);
-            result=resultado.toString();
-            contPMA=Integer.parseInt(result);
+
+            resultado = poAnalistaServices.obtenerSolicitudesProcesadasXFecha(estado);
+            result = resultado.toString();
+            contPMA = Integer.parseInt(result);
             return contPMA;
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Solicitudes Procesadas");
             return 0;
         }
     }
-    
-    
+
     /**
      * Método que obtiene el total de las solicitudes procesadas por el analista
+     *
      * @param idAnalista
      * @return
      */
@@ -294,11 +342,22 @@ public class ColasWS {
             return 0;
         }
     }
-   
-     @WebMethod(operationName = "buscarAnalista")
-    public Analista buscarAnalista(@WebParam(name = "idAnalista") String idAnalista) {
-        Analista find = analistaServices.find(new BigDecimal(idAnalista));
-         return find;
-     }
     
+     /**
+     * Busca el analista por el Id
+     *
+     * @param idAnalista
+     * @return todos los datos del analista
+     */
+
+    @WebMethod(operationName = "buscarAnalista")
+    public Analista buscarAnalista(@WebParam(name = "idAnalista") String idAnalista) {
+        try {
+            Analista find = analistaServices.find(new BigDecimal(idAnalista));
+            return find;
+        } catch (Exception ex) {
+            return null;
+        }
+
+    }
 }
