@@ -239,7 +239,7 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
         cal2.set(Calendar.DAY_OF_MONTH, dia);
 
         fecha2 = cal2.getTime();
-        estado="0";
+        estado="1";
         Query query;
         query = em.createNamedQuery("PreordenAnalista.ContarAnalistaStatusYFecha", Preorden.class);
         query.setParameter("idanalista", data);
