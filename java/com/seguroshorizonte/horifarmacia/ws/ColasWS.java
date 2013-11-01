@@ -373,5 +373,17 @@ public class ColasWS {
          
     }
     
-    
+    @WebMethod(operationName = "listaSolicitudesPendientes")
+    public List<PreordenAnalista> listaSolicitudesPendientes(@WebParam(name = "estado") String estado) {
+
+        try {
+            List<PreordenAnalista> listaPMA;
+
+            listaPMA = poAnalistaServices.listaSolicitudesPendientes(estado);
+            return listaPMA;
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de Solicitudes Pendientes");
+            return null;
+        }
+    }
 }
