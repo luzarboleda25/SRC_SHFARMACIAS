@@ -386,4 +386,22 @@ public class ColasWS {
             return null;
         }
     }
+    
+    /**
+     * Método que obtiene el total de las solicitudes procesadas por el analista
+     *
+     * @param idAnalista
+     * @return
+     */
+    @WebMethod(operationName = "contarAnalistaStatusYFecha")
+    public int contarAnalistaStatusYFecha(@WebParam(name = "idAnalista") String idAnalista) {
+
+        try {
+            int Cont = poAnalistaServices.contarAnalistaStatusYFecha(idAnalista);
+            return Cont;
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de PreOrden");
+            return 0;
+        }
+    }
 }
