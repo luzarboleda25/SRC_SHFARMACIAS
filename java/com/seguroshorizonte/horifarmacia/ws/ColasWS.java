@@ -360,4 +360,18 @@ public class ColasWS {
          
     }
     
+    @WebMethod(operationName = "analistasConectados")
+    public List<Analista> analistasConectados(@WebParam(name = "estado") String estado) {
+        try {
+           List<Analista> listaAnalista;
+           listaAnalista=analistaServices.analistasConectados(estado);
+           return listaAnalista;   
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de Analista");
+            return null;
+        }
+         
+    }
+    
+    
 }
