@@ -99,34 +99,18 @@ public class ColasWS {
      * @return 1 cuando se hizo la operacion y 0 cuando hubo un error
      */
     @WebMethod(operationName = "priorizarColaXcodCli")
-    public int priorizarDeLaColaXcodCli(@WebParam(name = "codCli") String codCli) {
+    public List<ColaPreorden> priorizarDeLaColaXcodCli(@WebParam(name = "codCli") String codCli) {
 
 
         try {
             List<ColaPreorden> buscar = colaPoServices.buscarColaXcodCli(codCli);
-            BigDecimal primeroC = colaPoServices.primeroCola();
-            int idmin = primeroC.intValue() - (buscar.size());
-
-
-            if (idmin != 0 && buscar.size() > 0) {
-                idmin = primeroC.intValue() - (buscar.size());
-                for (int j = 0; j < buscar.size(); j++) {
-                    colaPoServices.remove(buscar.get(j));
-                    buscar.get(j).setIdcolapreorden(new BigDecimal(idmin));
-                    colaPoServices.edit(buscar.get(j));
-                    idmin++;
-                }
-
-            } else {
-                return 0;
-            }
-
-
+           
+            return buscar;
         } catch (Exception ex) {
-            return 0;
+            return null;
         }
 
-        return 1;
+       
 
 
 
@@ -360,4 +344,20 @@ public class ColasWS {
         }
 
     }
+    
+     /**
+     * Enlista toda la cola
+     * @return la cola de preOrdenes
+     */
+    @WebMethod(operationName = "imprimirCola")
+    public List<ColaPreorden> imprimirCola() {
+        try {
+           List<ColaPreorden> Cola=colaPoServices.findAll();
+           return Cola;   
+        } catch (Exception ex) {
+            return null;
+        }
+         
+    }
+    
 }
