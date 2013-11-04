@@ -442,17 +442,17 @@ public class ColasWS {
     
     
     /**
-     * Método que obtiene el total de los Analistas
+     * Método que obtiene la lista total de los Analistas
      *
-     * @return total de los Analistas
+     * @return lista total de los Analistas
      */
     @WebMethod(operationName = "obtenerTotalAnalistas")
-    public int obtenerTotalAnalistas() {
+    public List<Analista> obtenerTotalAnalistas() {
         try {
-            return analistaServices.count();
+            return analistaServices.findAll();
         } catch (Exception ex) {
             System.out.println("ERROR de la busqueda de Total de Analistas");
-            return 0;
+            return null;
         }
     }
     
