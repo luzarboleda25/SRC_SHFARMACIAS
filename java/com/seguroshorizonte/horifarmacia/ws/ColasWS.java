@@ -385,25 +385,6 @@ public class ColasWS {
     }
     
     /**
-     * Método que lista las solicitudes pendientes para cada analista
-     * @param estado
-     * @return lista de analistas con solicitudes pendientes
-     */
-    @WebMethod(operationName = "listaSolicitudesPendientes")
-    public List<PreordenAnalista> listaSolicitudesPendientes(@WebParam(name = "estado") String estado) {
-
-        try {
-            List<PreordenAnalista> listaPMA;
-
-            listaPMA = poAnalistaServices.listaSolicitudesPendientes(estado);
-            return listaPMA;
-        } catch (Exception ex) {
-            System.out.println("ERROR de la busqueda de Solicitudes Pendientes");
-            return null;
-        }
-    }
-    
-    /**
      * Método que obtiene el total de las solicitudes procesadas por el analista
      * en el día de hoy
      *
@@ -446,8 +427,8 @@ public class ColasWS {
      *
      * @return lista total de los Analistas
      */
-    @WebMethod(operationName = "obtenerTotalAnalistas")
-    public List<Analista> obtenerTotalAnalistas() {
+    @WebMethod(operationName = "listaTotalAnalistas")
+    public List<Analista> listaTotalAnalistas() {
         try {
             return analistaServices.findAll();
         } catch (Exception ex) {

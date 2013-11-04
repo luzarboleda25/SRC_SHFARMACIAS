@@ -206,15 +206,6 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
     }
     
     
-     public List<PreordenAnalista> listaSolicitudesPendientes(String status) {
-        
-        List<PreordenAnalista> listaPendiente;
-        Query query = em.createNamedQuery("PreordenAnalista.findByStatusPendiente", PreordenAnalista.class);
-        query.setParameter("status", status);
-        listaPendiente = query.getResultList();
-        return listaPendiente;
-    }
-     
     public int contarAnalistaStatusYFecha(String IdAnalista) {
 
         Analista data = new Analista();

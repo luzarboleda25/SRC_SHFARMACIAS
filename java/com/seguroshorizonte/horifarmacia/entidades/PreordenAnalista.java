@@ -43,7 +43,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PreordenAnalista.ContarSHXidAnalista", query = "SELECT COUNT(p.idpreordenanalista)  FROM PreordenAnalista p WHERE p.idanalista = :idanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenAnalista.findByIdAnalista", query = "SELECT  p FROM PreordenAnalista p  WHERE p.idanalista = :idanalista AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenAnalista.findByProcesadaFechaHoy", query = "SELECT DISTINCT p.idanalista FROM PreordenAnalista p WHERE p.status = :status AND p.fecha BETWEEN :fecha1 and :fecha2"),
-    @NamedQuery(name = "PreordenAnalista.findByStatusPendiente", query = "SELECT DISTINCT p.idanalista FROM PreordenAnalista p WHERE p.status = :status"),
     @NamedQuery(name = "PreordenAnalista.ContarAnalistaStatusYFecha", query = "SELECT COUNT(p.idpreordenanalista) FROM PreordenAnalista p WHERE p.idanalista = :idanalista AND p.fecha BETWEEN :fecha1 and :fecha2 AND p.status = :status"),
     @NamedQuery(name = "PreordenAnalista.findByContadorProcesadas", query = "SELECT COUNT(p) FROM PreordenAnalista p WHERE p.status = :status AND p.fecha BETWEEN :fecha1 and :fecha2"),
     @NamedQuery(name = "PreordenAnalista.findByContarAnalistaStatusPendientes", query = "SELECT COUNT(p.idpreordenanalista) FROM PreordenAnalista p WHERE p.idanalista = :idanalista AND p.status = :status")})
