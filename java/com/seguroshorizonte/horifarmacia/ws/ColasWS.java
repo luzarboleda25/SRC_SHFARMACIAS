@@ -352,7 +352,15 @@ public class ColasWS {
     @WebMethod(operationName = "imprimirCola")
     public List<ColaPreorden> imprimirCola() {
         try {
-           List<ColaPreorden> Cola=colaPoServices.findAll();
+           List<ColaPreorden> Cola=colaPoServices.Cola();
+           int j=0;
+           while(j<Cola.size()){
+           Cola.get(j).getIdpreorden().setPreordenAnalista(null);
+           Cola.get(j).getIdpreorden().setColaPreordenCollection(null);
+           Cola.get(j).getIdpreorden().setPreordenMedicamentoList(null);
+           j++;
+           }
+           
            return Cola;   
         } catch (Exception ex) {
             return null;

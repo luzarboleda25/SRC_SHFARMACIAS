@@ -111,5 +111,15 @@ public class ColaPreordenFacade extends AbstractFacade<ColaPreorden> {
          return resultList;
          
      }
+      
+       public List<ColaPreorden> Cola(){
+        
+         
+           Query query = em.createNamedQuery("ColaPreorden.findAll", ColaPreorden.class);
+          List<ColaPreorden> resultList = query.getResultList();
+          
+         return resultList;
+         
+     }
     
 }
