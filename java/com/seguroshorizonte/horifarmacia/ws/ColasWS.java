@@ -439,4 +439,21 @@ public class ColasWS {
             return 0;
         }
     }
+    
+    
+    /**
+     * Método que obtiene el total de los Analistas
+     *
+     * @return total de los Analistas
+     */
+    @WebMethod(operationName = "obtenerTotalAnalistas")
+    public int obtenerTotalAnalistas() {
+        try {
+            return analistaServices.count();
+        } catch (Exception ex) {
+            System.out.println("ERROR de la busqueda de Total de Analistas");
+            return 0;
+        }
+    }
+    
 }
