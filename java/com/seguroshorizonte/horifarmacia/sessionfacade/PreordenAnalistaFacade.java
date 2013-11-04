@@ -255,4 +255,22 @@ public class PreordenAnalistaFacade extends AbstractFacade<PreordenAnalista> {
 
     }
     
+     public int contarAnalistaStatusPendiente(String IdAnalista) {
+
+        Analista data = new Analista();
+        data.setIdanalista(new BigDecimal(IdAnalista));
+        String estado;
+        estado="0";
+        Query query;
+        query = em.createNamedQuery("PreordenAnalista.findByContarAnalistaStatusPendientes", Preorden.class);
+        query.setParameter("idanalista", data);
+        query.setParameter("status", estado);
+
+        Object resultList = query.getSingleResult();
+
+        String contador = resultList.toString();
+        int con = Integer.parseInt(contador);
+        return con;
+
+    }
 }
