@@ -123,7 +123,7 @@ public class ColasWS {
      * @param idPreOrden
      * @return
      */
-    @WebMethod(operationName = "priorizarColaXidPreOrden")
+    @WebMethod(operationName = "priorizarDeLaColaXidPreOrden")
     public int priorizarDeLaColaXidPreOrden(@WebParam(name = "idPreOrden") String idPreOrden) {
         try {
             ColaPreorden buscar = colaPoServices.buscarColaXidPreOrden(idPreOrden);
@@ -132,7 +132,7 @@ public class ColasWS {
             if (idmin != 0) {
                 colaPoServices.remove(buscar);
                 buscar.setIdcolapreorden(new BigDecimal(idmin));
-                colaPoServices.edit(buscar);
+                colaPoServices.create(buscar);
             } else {
                 return 0;
             }
