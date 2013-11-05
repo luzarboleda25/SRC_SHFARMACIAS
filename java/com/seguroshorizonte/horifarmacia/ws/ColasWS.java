@@ -104,7 +104,13 @@ public class ColasWS {
 
         try {
             List<ColaPreorden> buscar = colaPoServices.buscarColaXcodCli(codCli);
+            
+            int j = 0;
+            while (buscar.size() > j) {
+            buscar.get(j).getIdpreorden().setPreordenAnalista(null);
            
+            j++;
+            }
             return buscar;
         } catch (Exception ex) {
             return null;
@@ -122,9 +128,12 @@ public class ColasWS {
      *
      * @param idPreOrden
      * @return
+     * @return 1 cuando se hizo la extracción y se asigno y 0 cuando hubo un
+     * error
      */
     @WebMethod(operationName = "priorizarDeLaColaXidPreOrden")
     public int priorizarDeLaColaXidPreOrden(@WebParam(name = "idPreOrden") String idPreOrden) {
+       
         try {
             ColaPreorden buscar = colaPoServices.buscarColaXidPreOrden(idPreOrden);
             BigDecimal primeroC = colaPoServices.primeroCola();
@@ -132,16 +141,14 @@ public class ColasWS {
             if (idmin != 0) {
                 colaPoServices.remove(buscar);
                 buscar.setIdcolapreorden(new BigDecimal(idmin));
-                colaPoServices.create(buscar);
+                colaPoServices.edit(buscar);
             } else {
                 return 0;
             }
 
-
         } catch (Exception ex) {
             return 0;
         }
-
         return 1;
 
 
@@ -203,7 +210,7 @@ public class ColasWS {
     /**
      * Método que obtiene el total de la cola
      *
-     * @return total de la cola preorden
+     * @return
      */
     @WebMethod(operationName = "obtenerColaPreOrden")
     public int obtenerColaPreOrden() {
@@ -218,7 +225,7 @@ public class ColasWS {
     /**
      * Método que obtiene el total de la cola el día de hoy
      *
-     * @return total de la cola preorden asignada el día de hoy
+     * @return
      */
     @WebMethod(operationName = "obtenerTotalXFechaHoy")
     public int obtenerTotalXFechaHoy() {
@@ -242,7 +249,7 @@ public class ColasWS {
      * Método que obtiene el total de los operadores conectados con estado "1"
      *
      * @param estado
-     * @return total de operadores conectados
+     * @return
      */
     @WebMethod(operationName = "obtenerTotalOperadoresConectadosXEstado")
     public int obtenerTotalOperadoresConectadosXEstado(@WebParam(name = "estado") String estado) {
@@ -266,7 +273,7 @@ public class ColasWS {
      * Método que obtiene la lista de las solicitudes procesadas el día de hoy
      *
      * @param estado
-     * @return lista de solicitudes procesadas el día de hoy
+     * @return
      */
     @WebMethod(operationName = "listaSolicitudesProcesadasXFecha")
     public List<PreordenAnalista> listaSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
@@ -287,7 +294,7 @@ public class ColasWS {
      * analista
      *
      * @param estado
-     * @return total de solicitudes procesadas el día de hoy
+     * @return
      */
     @WebMethod(operationName = "obtenerSolicitudesProcesadasXFecha")
     public int obtenerSolicitudesProcesadasXFecha(@WebParam(name = "estado") String estado) {
@@ -311,7 +318,7 @@ public class ColasWS {
      * Método que obtiene el total de las solicitudes procesadas por el analista
      *
      * @param idAnalista
-     * @return total de solicitudes procesdas por el analista
+     * @return
      */
     @WebMethod(operationName = "contarSHXidAnalista")
     public int contarSHXidAnalista(@WebParam(name = "idAnalista") String idAnalista) {
@@ -366,11 +373,6 @@ public class ColasWS {
          
     }
     
-    /**
-     * Método que lista los analista conectados
-     * @param estado
-     * @return lista de los analistas conectados
-     */
     @WebMethod(operationName = "analistasConectados")
     public List<Analista> analistasConectados(@WebParam(name = "estado") String estado) {
         try {
@@ -384,12 +386,13 @@ public class ColasWS {
          
     }
     
+   
+    
     /**
      * Método que obtiene el total de las solicitudes procesadas por el analista
-     * en el día de hoy
      *
      * @param idAnalista
-     * @return contador para cada analista de solicitudes procesadas el día de hoy
+     * @return
      */
     @WebMethod(operationName = "contarAnalistaStatusYFecha")
     public int contarAnalistaStatusYFecha(@WebParam(name = "idAnalista") String idAnalista) {
@@ -402,39 +405,4 @@ public class ColasWS {
             return 0;
         }
     }
-    
-    /**
-     * Método que obtiene el total de las solicitudes pendientes por analista
-     *
-     * @param idAnalista
-     * @return contador para cada analista de solicitudes pendientes
-     */
-    @WebMethod(operationName = "contarAnalistaPendientes")
-    public int contarAnalistaPendientes(@WebParam(name = "idAnalista") String idAnalista) {
-
-        try {
-            int Cont = poAnalistaServices.contarAnalistaStatusPendiente(idAnalista);
-            return Cont;
-        } catch (Exception ex) {
-            System.out.println("ERROR de la busqueda de PreOrden");
-            return 0;
-        }
-    }
-    
-    
-    /**
-     * Método que obtiene la lista total de los Analistas
-     *
-     * @return lista total de los Analistas
-     */
-    @WebMethod(operationName = "listaTotalAnalistas")
-    public List<Analista> listaTotalAnalistas() {
-        try {
-            return analistaServices.findAll();
-        } catch (Exception ex) {
-            System.out.println("ERROR de la busqueda de Total de Analistas");
-            return null;
-        }
-    }
-    
 }
