@@ -98,7 +98,7 @@ public class ColasWS {
      * @param codCli
      * @return 1 cuando se hizo la operacion y 0 cuando hubo un error
      */
-    @WebMethod(operationName = "priorizarColaXcodCli")
+    @WebMethod(operationName = "priorizarDeLaColaXcodCli")
     public List<ColaPreorden> priorizarDeLaColaXcodCli(@WebParam(name = "codCli") String codCli) {
 
 
